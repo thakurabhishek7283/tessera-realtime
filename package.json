@@ -7,6 +7,7 @@
     "node": ">=22.12"
   },
   "scripts": {
+    "deps": "node scripts/fetch-deps.mjs",
     "dev": "turbo run dev --filter=playground",
     "build": "turbo run build",
     "test": "turbo run test",
@@ -32,5 +33,16 @@
     "typescript": "~6.0.3",
     "vitest": "^5.0.0",
     "zod": "^4.6.5"
+  },
+  "pnpm": {
+    "overrides": {
+      "@tessera/core": "link:./external/tessera/packages/core",
+      "@tessera/elements": "link:./external/tessera/packages/elements",
+      "@tessera/react": "link:./external/tessera/packages/react",
+      "@tessera/testing": "link:./external/tessera/packages/testing",
+      "@tessera/transport": "link:./external/tessera/packages/transport",
+      "@tessera/storage": "link:./external/tessera/packages/storage",
+      "@tessera/protocol": "link:./external/tessera/packages/protocol"
+    }
   }
 }
