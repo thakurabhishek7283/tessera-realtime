@@ -61,4 +61,7 @@ declare module '@tessera/core' {
   interface FeatureApiMap {
     presence: PresenceApi;
   }
+  interface ServiceMap {
+    presence: PresenceApi;
+  }
 }
