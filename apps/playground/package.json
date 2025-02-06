@@ -13,6 +13,7 @@
   "dependencies": {
     "@tessera/core": "^0.1.0",
     "@tessera/elements": "^0.1.0",
+    "@tessera/presence": "workspace:*",
     "@tessera/storage": "^0.1.0",
     "@tessera/transport": "^0.1.0",
     "lit": "^3.3.0",

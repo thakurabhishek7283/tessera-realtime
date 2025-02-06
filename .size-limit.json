@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "name": "@tessera/presence — entry + plugin",
+    "path": ["packages/presence/dist/index.js", "packages/presence/dist/plugin-*.js"],
+    "limit": "6 kB",
+    "gzip": true,
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/transport",
+      "@tessera/react",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime"
+    ]
+  },
+  {
+    "name": "@tessera/presence — elements",
+    "path": "packages/presence/dist/elements/index.js",
+    "limit": "8 kB",
+    "gzip": true,
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/transport",
+      "@tessera/react",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime"
+    ]
+  }
+]

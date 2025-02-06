@@ -1,6 +1,7 @@
 import type { PluginLoader, TesseraInstance } from '@tessera/core';
 import type { TemplateResult } from 'lit';
 import type { z } from 'zod';
+import { presenceSection } from './sections/presence.js';
 
 /** One kit in the playground: its plugin, its option schema and what it shows. */
 export interface Section {
@@ -21,5 +22,5 @@ export interface SectionContext {
   user: string;
 }
 
-/** Filled in by each kit's playground module as it lands. */
-export const SECTIONS: Section[] = [];
+/** One entry per kit, in tab order. */
+export const SECTIONS: Section[] = [presenceSection];
