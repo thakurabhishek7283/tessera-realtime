@@ -237,6 +237,17 @@ describe.each(['server', 'local'] as const)('chat (%s)', (mode) => {
       await expect(ta.api.openDirect('alice')).rejects.toBeDefined();
     });
 
+    it('shows a direct conversation to the other person as soon as it is opened', async () => {
+      const w = await world();
+      const ta = await w.tab(alice);
+      const tb = await w.tab(bob);
+      await tb.api.openConversation('general').then((c) => c.close());
+      await ta.api.openDirect('bob');
+      await until(() => tb.api.conversations.get().some((c) => c.kind === 'direct'));
+      const [dm] = tb.api.conversations.get().filter((c) => c.kind === 'direct');
+      expect(dm?.members).toEqual(['alice', 'bob']);
+    });
+
     it('lists conversations by recent activity, including configured rooms', async () => {
       const w = await world();
       const ta = await w.tab(alice, {

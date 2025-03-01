@@ -38,6 +38,8 @@ export interface SessionOptions {
   conversation: Conversation;
   /** Called whenever the conversation's summary (last message, unread) changes. */
   onSummary(conversation: Conversation): void;
+  /** Called for every author seen, so the API can show names for direct conversations. */
+  onUser?(user: UserInfo): void;
   /** Whether the page is visible; reading only counts while it is. */
   visible?: () => boolean;
 }
@@ -50,8 +52,11 @@ export interface Session {
   controller(): ConversationController;
   /** Loads the newest page once; later calls return the same promise. */
   ensureLoaded(): Promise<void>;
-  /** Adopts the server's unread count unless the user has already read something in this session. */
-  syncUnread(unread: number): void;
+  /**
+   * Adopts the server's unread count unless the user has already read something in this session.
+   * `lastId` is the newest message the count covers; messages that arrived live after it are added.
+   */
+  syncUnread(unread: number, lastId: string | undefined): void;
   dispose(): Promise<void>;
 }
 
@@ -87,6 +92,8 @@ export function createSession(opts: SessionOptions): Session {
   const pending = new Map<string, PendingSend>();
   const markers = new Map<string, string>();
   const knownUsers = new Map<string, UserInfo>();
+  // Ids of messages from others that were counted as unread because they arrived live.
+  let liveUnread: string[] = [];
   let loaded: Promise<void> | undefined;
   let typingOn = false;
   let typingTimer: ReturnType<typeof setTimeout> | undefined;
@@ -115,11 +122,13 @@ export function createSession(opts: SessionOptions): Session {
   };
 
   const remember = (m: Message): void => {
-    knownUsers.set(m.authorId, {
+    const user: UserInfo = {
       id: m.authorId,
       name: m.authorName,
       ...(m.authorAvatarUrl ? { avatarUrl: m.authorAvatarUrl } : {}),
-    });
+    };
+    knownUsers.set(m.authorId, user);
+    opts.onUser?.(user);
   };
 
   const readByMarkers = (): Record<string, UserInfo[]> => {
@@ -265,6 +274,7 @@ export function createSession(opts: SessionOptions): Session {
     batch(() => {
       putMessage(message);
       if (!own && !known && !message.deletedAt) {
+        liveUnread.push(message.id);
         state.set((prev) => ({ ...prev, unread: prev.unread + 1 }));
         publishSummary();
       }
@@ -547,9 +557,12 @@ export function createSession(opts: SessionOptions): Session {
       });
       return loaded;
     },
-    syncUnread(unread) {
-      if (markers.has(self.id) || state.get().unread === unread) return;
-      patch({ unread });
+    syncUnread(unread, lastId) {
+      if (markers.has(self.id)) return;
+      // The server's count covers messages up to `lastId`; later ones arrived live and still count.
+      liveUnread = liveUnread.filter((messageId) => lastId === undefined || messageId > lastId);
+      const total = unread + liveUnread.length;
+      if (state.get().unread !== total) patch({ unread: total });
     },
     async dispose() {
       disposed = true;

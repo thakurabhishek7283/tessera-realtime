@@ -4,6 +4,7 @@ import {
   type TesseraContext,
   TesseraError,
   type Transport,
+  type UserInfo,
 } from '@tessera/core';
 import { ChatConversationsRes, ChatOpenDirectRes, TopicSchemas } from '@tessera/protocol';
 import type { ChatConfigValue } from './config.js';
@@ -15,6 +16,8 @@ import type { ChatApi, Conversation, ConversationController } from './types.js';
 
 /** Joined rooms cost the connection a slot each; unread counts are tracked for this many. */
 const MAX_WATCHED = 20;
+/** Conversations other people start are found at least this often. */
+const REFRESH_EVERY_MS = 60_000;
 
 interface Entry {
   session: Promise<Session>;
@@ -72,6 +75,7 @@ export function createChatApi(
   const conversations = createStore<Conversation[]>([]);
   const totalUnread = conversations.select((list) => list.reduce((n, c) => n + c.unread, 0));
   const entries = new Map<string, Entry>();
+  const users = new Map<string, UserInfo>();
   let control: Promise<Room> | undefined;
   let initialised: Promise<void> | undefined;
   let disposed = false;
@@ -111,10 +115,21 @@ export function createChatApi(
   );
 
   const controlRoom = (): Promise<Room> => {
-    control ??= transport.join(CONTROL_ROOM).catch((error: unknown) => {
-      control = undefined;
-      throw error;
-    });
+    control ??= transport
+      .join(CONTROL_ROOM)
+      .then((room) => {
+        // A direct conversation somebody else opens with us: the protocol has no push for it, so
+        // the local emulation announces it here and other transports are caught by `refresh`.
+        offs.push(
+          room.on('chat.conversation-added', onConversationAdded),
+          room.on('$reconnected', () => void refresh()),
+        );
+        return room;
+      })
+      .catch((error: unknown) => {
+        control = undefined;
+        throw error;
+      });
     return control;
   };
 
@@ -122,16 +137,29 @@ export function createChatApi(
     const entry: Entry = {
       refs: 0,
       watched,
-      session: transport
-        .join(chatRoomName(meta.id))
-        .then((room) =>
-          createSession({ ctx, config, room, conversation: meta, onSummary: setSummary }),
-        ),
+      session: transport.join(chatRoomName(meta.id)).then((room) =>
+        createSession({
+          ctx,
+          config,
+          room,
+          conversation: meta,
+          onSummary: setSummary,
+          onUser: (user) => users.set(user.id, user),
+        }),
+      ),
     };
     entry.session.catch(() => entries.delete(meta.id));
     entries.set(meta.id, entry);
     setSummary(meta);
     return entry;
+  };
+
+  const onConversationAdded = (data: unknown): void => {
+    const parsed = ChatOpenDirectRes.safeParse(data);
+    if (!parsed.success || !config.directMessages || disposed) return;
+    const self = ctx.auth.getUser()?.id;
+    if (!self || !parsed.data.members?.includes(self) || entries.has(parsed.data.id)) return;
+    startSession(parsed.data as Conversation, true);
   };
 
   const initialise = async (): Promise<void> => {
@@ -170,7 +198,21 @@ export function createChatApi(
     if (!again.success) return;
     for (const c of again.data.conversations) {
       const entry = entries.get(c.id);
-      if (entry) void entry.session.then((s) => s.syncUnread(c.unread));
+      if (entry) void entry.session.then((s) => s.syncUnread(c.unread, c.lastMessage?.id));
+    }
+  };
+
+  let refreshing = false;
+  /** Looks for conversations that appeared since the list was loaded, and corrects unread counts. */
+  const refresh = async (): Promise<void> => {
+    if (refreshing || disposed || !initialised) return;
+    refreshing = true;
+    try {
+      await initialise();
+    } catch (error) {
+      ctx.logger.debug('could not refresh the conversation list', error);
+    } finally {
+      refreshing = false;
     }
   };
 
@@ -194,6 +236,18 @@ export function createChatApi(
       if (state === 'open' && !initialised && !disposed) warm();
     }),
   );
+
+  if (typeof document !== 'undefined') {
+    const onVisible = (): void => {
+      if (document.visibilityState === 'visible') void refresh();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    offs.push(() => document.removeEventListener('visibilitychange', onVisible));
+  }
+  const poll = setInterval(() => {
+    if (typeof document === 'undefined' || document.visibilityState === 'visible') void refresh();
+  }, REFRESH_EVERY_MS);
+  offs.push(() => clearInterval(poll));
 
   const acquire = async (id: string, meta?: Conversation): Promise<ConversationController> => {
     await ensureInitialised();
@@ -243,6 +297,7 @@ export function createChatApi(
     config,
     conversations,
     totalUnread,
+    displayName: (userId) => users.get(userId)?.name,
     openConversation: (id) => acquire(id),
     async openDirect(userId) {
       if (!config.directMessages) {

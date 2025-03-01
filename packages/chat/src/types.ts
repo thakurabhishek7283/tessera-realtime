@@ -66,6 +66,8 @@ export interface ChatApi {
   /** Every conversation the user can see, most recently active first. */
   readonly conversations: ReadonlyStore<Conversation[]>;
   readonly totalUnread: ReadonlyStore<number>;
+  /** The name a user was last seen with in any conversation, if any. */
+  displayName(userId: string): string | undefined;
   openConversation(id: string): Promise<ConversationController>;
   /** Opens (creating on first use) the direct conversation with another user. */
   openDirect(userId: string): Promise<ConversationController>;

@@ -127,8 +127,25 @@ export function createLocalChatServer(
   } = {
     async 'chat.conversations'(_req, { user }) {
       const mine = (await listAll(directs)).filter((d) => d.data.members.includes(user.id));
+      const byConversation = new Map<string, MessageDto[]>();
+      for (const { data } of await listAll(messages)) {
+        const list = byConversation.get(data.conversationId);
+        if (list) list.push(data);
+        else byConversation.set(data.conversationId, [data]);
+      }
+      // A room exists once it is configured or someone has written to it, like on the server.
+      const roomIds = [
+        ...new Set([
+          ...rooms.map((r) => r.id),
+          ...[...byConversation.keys()].filter((id) => !id.startsWith('dm:')),
+        ]),
+      ];
+      const titles = new Map(rooms.map((r) => [r.id, r.title]));
       const entries = [
-        ...rooms.map((r) => ({ id: r.id, kind: 'room' as const, title: r.title, createdAt: '' })),
+        ...roomIds.map((id) => {
+          const title = titles.get(id);
+          return { id, kind: 'room' as const, ...(title ? { title } : {}), createdAt: '' };
+        }),
         ...mine.map((d) => ({
           id: d.id,
           kind: 'direct' as const,
@@ -138,7 +155,9 @@ export function createLocalChatServer(
       ];
       const conversations = await Promise.all(
         entries.map(async (entry) => {
-          const all = await inConversation(entry.id);
+          const all = (byConversation.get(entry.id) ?? []).sort((a, b) =>
+            a.id < b.id ? -1 : a.id > b.id ? 1 : 0,
+          );
           const last = all.at(-1);
           const { createdAt, ...rest } = entry;
           return {
@@ -160,19 +179,20 @@ export function createLocalChatServer(
       return { conversations: conversations.map((c) => c.conversation) };
     },
 
-    async 'chat.open-direct'(req, { user }) {
+    async 'chat.open-direct'(req, { user, broadcast }) {
       if (req.userId === user.id) {
         throw new TesseraError('VALIDATION', 'Cannot open a conversation with yourself');
       }
       const id = pairId(user.id, req.userId);
+      const members = [user.id, req.userId].sort();
       const existing = await directs.get(id);
+      const conversation = { id, kind: 'direct' as const, members, unread: 0 };
       if (!existing) {
-        await directs.put({
-          id,
-          data: { id, kind: 'direct', members: [user.id, req.userId].sort(), createdAt: now() },
-        });
+        await directs.put({ id, data: { id, kind: 'direct', members, createdAt: now() } });
+        // Lets the other person's tab show the conversation without reloading.
+        broadcast('chat.conversation-added', conversation);
       }
-      return { id, kind: 'direct', members: [user.id, req.userId].sort(), unread: 0 };
+      return conversation;
     },
 
     async 'chat.send'(req, { user, broadcast }) {
