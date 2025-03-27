@@ -1,6 +1,8 @@
 import { definePlugin } from '@tessera/core';
 import { createChatApi } from './api.js';
 import { ChatConfig } from './config.js';
+import { de } from './i18n/de.js';
+import { en } from './i18n/en.js';
 import type { ChatApi } from './types.js';
 
 const disposers = new WeakMap<ChatApi, () => Promise<void>>();
@@ -18,6 +20,7 @@ export const chatPlugin = definePlugin({
   version: '0.1.0',
   configSchema: ChatConfig,
   requires: ['transport'],
+  messages: { en, de },
   setup(ctx, config): ChatApi {
     const api = createChatApi(ctx, config);
     disposers.set(api, api.dispose);
