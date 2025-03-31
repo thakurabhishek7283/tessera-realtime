@@ -68,7 +68,9 @@ export function wrapElement<E extends HTMLElement, P extends object>(
 
     const latest = useRef(handlers);
     latest.current = handlers;
-    useEffect(() => {
+    // A layout effect, so listeners exist before the element can fire anything: connecting it
+    // may start asynchronous work that finishes before a passive effect would have run.
+    useIsomorphicLayoutEffect(() => {
       const node = el.current;
       if (!node) return;
       const offs = Object.entries(options.events).map(([prop, name]) => {
