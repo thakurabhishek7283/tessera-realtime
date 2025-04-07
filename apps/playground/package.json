@@ -11,6 +11,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@tessera/chat": "workspace:*",
     "@tessera/core": "^0.1.0",
     "@tessera/elements": "^0.1.0",
     "@tessera/presence": "workspace:*",

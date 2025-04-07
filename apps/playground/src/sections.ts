@@ -1,6 +1,7 @@
 import type { PluginLoader, TesseraInstance } from '@tessera/core';
 import type { TemplateResult } from 'lit';
 import type { z } from 'zod';
+import { chatSection } from './sections/chat.js';
 import { presenceSection } from './sections/presence.js';
 
 /** One kit in the playground: its plugin, its option schema and what it shows. */
@@ -23,4 +24,4 @@ export interface SectionContext {
 }
 
 /** One entry per kit, in tab order. */
-export const SECTIONS: Section[] = [presenceSection];
+export const SECTIONS: Section[] = [presenceSection, chatSection];

@@ -10,7 +10,10 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const check = process.argv.includes('--check');
 
-const targets = [{ pkg: 'presence', schema: 'PresenceConfig' }];
+const targets = [
+  { pkg: 'presence', schema: 'PresenceConfig' },
+  { pkg: 'chat', schema: 'ChatConfig' },
+];
 
 const START = '<!-- config:start -->';
 const END = '<!-- config:end -->';

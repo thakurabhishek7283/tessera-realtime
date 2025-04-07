@@ -50,6 +50,9 @@ importers:
 
   apps/playground:
     dependencies:
+      '@tessera/chat':
+        specifier: workspace:*
+        version: link:../../packages/chat
       '@tessera/core':
         specifier: link:../../external/tessera/packages/core
         version: link:../../external/tessera/packages/core

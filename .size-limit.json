@@ -1,6 +1,6 @@
 [
   {
-    "name": "@tessera/presence — entry + plugin",
+    "name": "@tessera/presence \u2014 entry + plugin",
     "path": ["packages/presence/dist/index.js", "packages/presence/dist/plugin-*.js"],
     "limit": "6 kB",
     "gzip": true,
@@ -18,7 +18,7 @@
     ]
   },
   {
-    "name": "@tessera/presence — elements",
+    "name": "@tessera/presence \u2014 elements",
     "path": "packages/presence/dist/elements/index.js",
     "limit": "8 kB",
     "gzip": true,
@@ -27,6 +27,52 @@
       "@tessera/elements",
       "@tessera/storage",
       "@tessera/transport",
+      "@tessera/react",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime"
+    ]
+  },
+  {
+    "name": "@tessera/chat \u2014 entry + plugin",
+    "path": [
+      "packages/chat/dist/index.js",
+      "packages/chat/dist/plugin-*.js",
+      "packages/chat/dist/messages-*.js"
+    ],
+    "limit": "11 kB",
+    "gzip": true,
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/transport",
+      "@tessera/protocol",
+      "@tessera/react",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime"
+    ]
+  },
+  {
+    "name": "@tessera/chat \u2014 elements (everything they can load, lazy chunks included)",
+    "path": [
+      "packages/chat/dist/elements/index.js",
+      "packages/chat/dist/emoji-*.js",
+      "packages/chat/dist/titles-*.js"
+    ],
+    "limit": "27 kB",
+    "gzip": true,
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/transport",
+      "@tessera/protocol",
       "@tessera/react",
       "lit",
       "@lit/context",
