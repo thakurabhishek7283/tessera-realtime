@@ -11,6 +11,8 @@ export class ScopeSession {
   failure: string | undefined;
   #scope: string | undefined;
   #opening: string | undefined;
+  /** A scope that could not be joined is not retried until the wanted scope changes. */
+  #failed: string | undefined;
   #generation = 0;
   #stop: (() => void) | undefined;
 
@@ -26,7 +28,7 @@ export class ScopeSession {
       this.close();
       return;
     }
-    if (wanted === this.#scope || wanted === this.#opening) return;
+    if (wanted === this.#scope || wanted === this.#opening || wanted === this.#failed) return;
     this.close();
     void this.#join(api, wanted);
   }
@@ -47,6 +49,7 @@ export class ScopeSession {
       if (onPeers) this.#stop = handle.peers.subscribe((peers) => onPeers(peers));
     } catch (error) {
       if (generation !== this.#generation) return;
+      this.#failed = scope;
       this.failure = error instanceof Error ? error.message : String(error);
     } finally {
       if (generation === this.#generation) this.#opening = undefined;
@@ -55,6 +58,7 @@ export class ScopeSession {
   }
 
   close(): void {
+    this.#failed = undefined;
     this.#generation++;
     const handle = this.handle;
     this.#stop?.();

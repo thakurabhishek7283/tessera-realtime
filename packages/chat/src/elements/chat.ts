@@ -101,6 +101,8 @@ export class TesseraChatElement extends TesseraElement {
   deleting: Message | undefined;
 
   #opening: string | undefined;
+  /** A conversation that failed to open is not retried until "Try again" or another id. */
+  #failedFor: string | undefined;
   #offs: Array<() => void> = [];
   #atBottom = true;
 
@@ -132,12 +134,15 @@ export class TesseraChatElement extends TesseraElement {
       if (this.controller) this.#teardown();
       return;
     }
-    if (id !== this.controller?.id && id !== this.#opening) void this.#open(api, id);
+    if (id !== this.controller?.id && id !== this.#opening && id !== this.#failedFor) {
+      void this.#open(api, id);
+    }
   }
 
   async #open(api: ChatApi, id: string): Promise<void> {
     this.#teardown();
     this.#opening = id;
+    this.#failedFor = undefined;
     this.failure = '';
     try {
       const controller = await api.openConversation(id);
@@ -163,8 +168,10 @@ export class TesseraChatElement extends TesseraElement {
       this.emit('conversation-open', { id });
       this.#maybeRead();
     } catch (error) {
-      if (this.#opening === id)
+      if (this.#opening === id) {
+        this.#failedFor = id;
         this.failure = error instanceof Error ? error.message : String(error);
+      }
     } finally {
       if (this.#opening === id) this.#opening = undefined;
     }
@@ -292,8 +299,8 @@ export class TesseraChatElement extends TesseraElement {
       return html`<div class="state" role="alert">
         <span>${this.t('chat.error', { message: this.failure })}</span>
         <tessera-button size="sm" @click=${() => {
+          this.#failedFor = undefined;
           this.failure = '';
-          this.requestUpdate();
         }}>${this.t('chat.tryAgain')}</tessera-button>
       </div>`;
     }
@@ -317,9 +324,8 @@ export class TesseraChatElement extends TesseraElement {
           ? html`<div class="state" role="alert">
               <span>${this.t('chat.error', { message: state.error })}</span>
               <tessera-button size="sm" @click=${() => {
-                const id = controller.id;
                 this.#teardown();
-                this.conversation = id;
+                this.#failedFor = undefined;
                 this.requestUpdate();
               }}>${this.t('chat.tryAgain')}</tessera-button>
             </div>`

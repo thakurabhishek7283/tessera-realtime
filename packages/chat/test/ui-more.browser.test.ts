@@ -224,3 +224,30 @@ describe('<tessera-chat-launcher>', () => {
     expect(el.shadowRoot?.activeElement).toBe(fab);
   });
 });
+
+describe('when a conversation cannot be opened', () => {
+  it('shows the failure once and retries only when asked', async () => {
+    const world = await newWorld('server');
+    const hub = world.hub;
+    const { el } = await mountTab(world, '<tessera-chat conversation="general"></tessera-chat>');
+    await until(() => el.shadowRoot?.querySelector('tessera-message-list'));
+    // The server starts refusing history requests.
+    let calls = 0;
+    hub?.handle('chat.history', () => {
+      calls += 1;
+      throw new Error('history is down');
+    });
+    const { el: broken } = await mountTab(
+      world,
+      '<tessera-chat conversation="support"></tessera-chat>',
+      bob,
+    );
+    const alert = await until(() => broken.shadowRoot?.querySelector('[role=alert]'));
+    expect(alert.textContent).toContain('history is down');
+    const seen = calls;
+    await new Promise((r) => setTimeout(r, 300));
+    expect(calls).toBe(seen);
+    must(broken.shadowRoot?.querySelector<HTMLElement>('tessera-button')).click();
+    await until(() => calls > seen);
+  });
+});

@@ -11,6 +11,7 @@ import {
 } from '@tessera-internal/test-utils';
 import { afterEach, describe, expect, it } from 'vitest';
 import type { TesseraCursorsElement, TesseraPresenceElement } from '../src/elements/index.js';
+import type { PresenceApi } from '../src/index.js';
 import { tab } from './helpers.js';
 
 afterEach(cleanup);
@@ -164,5 +165,30 @@ describe('<tessera-cursors>', () => {
     expect(watcher.cursors.get()[0]).toMatchObject({ x: 0.5, y: 0.25, user: { id: 'alice' } });
     box.dispatchEvent(new PointerEvent('pointerleave'));
     await until(() => watcher.cursors.get().length === 0);
+  });
+});
+
+describe('when a scope cannot be joined', () => {
+  it('does not keep retrying in a loop', async () => {
+    const hub = new FakeHub({ capacity: { presence: 0 } });
+    const { root } = await mountInstance(
+      { appId: hub.appId, features: { presence: { enabled: true } } },
+      { presence: () => import('../src/plugin.js') },
+      { hub, user: alice },
+    );
+    const api = must(
+      (root as unknown as { tessera: { feature(id: 'presence'): PresenceApi } }).tessera.feature(
+        'presence',
+      ),
+    );
+    let attempts = 0;
+    const join = api.join.bind(api);
+    api.join = (scope) => {
+      attempts += 1;
+      return join(scope);
+    };
+    root.innerHTML = '<tessera-presence scope="full"></tessera-presence>';
+    await new Promise((r) => setTimeout(r, 400));
+    expect(attempts).toBe(1);
   });
 });
