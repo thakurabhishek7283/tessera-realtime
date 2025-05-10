@@ -51,7 +51,8 @@ export function wrapElement<E extends HTMLElement, P extends object>(
       else if (options.properties.includes(key)) domProps[key] = value;
       else if (options.attributes && key in options.attributes) {
         if (value !== undefined && value !== false) {
-          attrs[options.attributes[key] as string] = value === true ? '' : value;
+          // React sets a property when the element has one, so a boolean must stay a boolean there.
+          attrs[options.attributes[key] as string] = value;
         }
       } else attrs[key] = value;
     }
