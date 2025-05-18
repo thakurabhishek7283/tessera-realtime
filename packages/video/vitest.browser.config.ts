@@ -13,12 +13,23 @@ export default defineConfig({
     include: ['lit', 'vitest/browser', 'zod'],
   },
   test: {
+    // Real connections between two pages in one browser need a few seconds.
+    testTimeout: 40_000,
     include: ['test/**/*.browser.test.{ts,tsx}'],
     browser: {
       enabled: true,
       headless: true,
       provider: playwright({
-        launchOptions: { ...(executablePath ? { executablePath } : {}), args: ['--no-sandbox'] },
+        launchOptions: {
+          ...(executablePath ? { executablePath } : {}),
+          // Chromium's fake camera and microphone, and no permission prompt: real WebRTC, no hardware.
+          args: [
+            '--no-sandbox',
+            '--use-fake-device-for-media-stream',
+            '--use-fake-ui-for-media-stream',
+            '--disable-features=WebRtcHideLocalIpsWithMdns',
+          ],
+        },
       }),
       instances: [{ browser: 'chromium' }],
     },

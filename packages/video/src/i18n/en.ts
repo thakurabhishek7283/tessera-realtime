@@ -1,6 +1,7 @@
 /** Default English strings. Override any key through `config.messages.en`. */
 export const en: Record<string, string> = {
   'video.call': 'Video call',
+  'video.cancel': 'Cancel',
   'video.join': 'Join call',
   'video.joinWith': 'Join',
   'video.joining': 'Joining…',
@@ -39,6 +40,8 @@ export const en: Record<string, string> = {
   'video.connection.reconnecting': 'Reconnecting…',
   'video.participants.one': '1 person in the call',
   'video.participants.other': '{count} people in the call',
+  'video.announce.join': '{name} joined the call',
+  'video.announce.leave': '{name} left the call',
   'video.alone': 'You are the only one here. Share the link to invite someone.',
   'video.error.permission-denied':
     'The browser blocked the camera and microphone. You can still join and listen.',

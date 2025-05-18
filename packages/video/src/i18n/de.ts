@@ -1,6 +1,7 @@
 /** Deutsche Texte. Einzelne Schlüssel lassen sich über `config.messages.de` überschreiben. */
 export const de: Record<string, string> = {
   'video.call': 'Videoanruf',
+  'video.cancel': 'Abbrechen',
   'video.join': 'Anruf beitreten',
   'video.joinWith': 'Beitreten',
   'video.joining': 'Beitritt läuft…',
@@ -39,6 +40,8 @@ export const de: Record<string, string> = {
   'video.connection.reconnecting': 'Verbindung wird wiederhergestellt…',
   'video.participants.one': '1 Person im Anruf',
   'video.participants.other': '{count} Personen im Anruf',
+  'video.announce.join': '{name} ist dem Anruf beigetreten',
+  'video.announce.leave': '{name} hat den Anruf verlassen',
   'video.alone': 'Du bist allein hier. Teile den Link, um jemanden einzuladen.',
   'video.error.permission-denied':
     'Der Browser hat Kamera und Mikrofon blockiert. Du kannst trotzdem beitreten und zuhören.',

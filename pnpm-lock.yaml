@@ -68,6 +68,9 @@ importers:
       '@tessera/transport':
         specifier: link:../../external/tessera/packages/transport
         version: link:../../external/tessera/packages/transport
+      '@tessera/video':
+        specifier: workspace:*
+        version: link:../../packages/video
       lit:
         specifier: ^3.3.0
         version: 3.3.3
@@ -267,6 +270,12 @@ importers:
       '@tessera-internal/test-utils':
         specifier: workspace:*
         version: link:../test-utils
+      '@tessera/chat':
+        specifier: workspace:*
+        version: link:../chat
+      '@tessera/presence':
+        specifier: workspace:*
+        version: link:../presence
       '@tessera/storage':
         specifier: link:../../external/tessera/packages/storage
         version: link:../../external/tessera/packages/storage

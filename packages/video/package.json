@@ -60,8 +60,10 @@
   "devDependencies": {
     "@tessera-internal/react-wrap": "workspace:*",
     "@tessera-internal/test-utils": "workspace:*",
+    "@tessera/chat": "workspace:*",
     "@tessera/core": "^0.1.0",
     "@tessera/elements": "^0.1.0",
+    "@tessera/presence": "workspace:*",
     "@tessera/protocol": "^0.1.0",
     "@tessera/react": "^0.1.0",
     "@tessera/storage": "^0.1.0",
