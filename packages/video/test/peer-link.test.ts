@@ -51,19 +51,36 @@ beforeEach(() => {
 afterEach(() => vi.useRealTimers());
 
 describe('perfect negotiation', () => {
-  it('connects two peers that both start by offering (glare) and ends stable on both sides', async () => {
+  it('has only the impolite peer make the first offer, so a fresh pair never collides', async () => {
     const { a, b, flush } = pair({ delay: true });
-    // Both fire negotiationneeded in the same tick; the offers cross on the wire.
     await flush();
     expect(a.pc.signalingState).toBe('stable');
     expect(b.pc.signalingState).toBe('stable');
-    // The polite side backed out of its own offer; the impolite side never rolled back.
-    expect(b.pc.rollbacks).toBeGreaterThan(0);
-    expect(a.pc.rollbacks).toBe(0);
+    expect(a.pc.offersMade).toHaveLength(1);
+    expect(b.pc.offersMade).toHaveLength(0);
+    expect(a.pc.rollbacks + b.pc.rollbacks).toBe(0);
     expect(a.states.at(-1)).toBe('connected');
     expect(b.states.at(-1)).toBe('connected');
     expect(a.remote.length).toBeGreaterThan(0);
     expect(b.remote.length).toBeGreaterThan(0);
+    // The polite peer still sends both its tracks, on the transceivers the offer created.
+    expect(b.pc.transceivers.map((t) => t.sender.track?.kind)).toEqual(['audio', 'video']);
+    expect(b.pc.transceivers.every((t) => t.direction === 'sendrecv')).toBe(true);
+  });
+
+  it('settles offers that cross later: the polite side backs out, the impolite side keeps its offer', async () => {
+    const { a, b, flush } = pair({ delay: true });
+    await flush();
+    // Both restart ICE in the same tick; the two offers pass each other on the wire.
+    a.pc.restartIce();
+    b.pc.restartIce();
+    await flush();
+    expect(a.pc.signalingState).toBe('stable');
+    expect(b.pc.signalingState).toBe('stable');
+    expect(b.pc.rollbacks).toBeGreaterThan(0);
+    expect(a.pc.rollbacks).toBe(0);
+    expect(a.states.at(-1)).toBe('connected');
+    expect(b.states.at(-1)).toBe('connected');
   });
 
   it('connects when the signalling is fast too', async () => {
@@ -74,11 +91,13 @@ describe('perfect negotiation', () => {
     expect(a.states).toContain('connected');
   });
 
-  it('ignores a colliding offer when impolite, and the polite peer answers the survivor', async () => {
+  it('ignores a colliding offer when impolite and answers the survivor when polite', async () => {
     const { a, b, flush } = pair({ delay: true });
     await flush();
-    // Exactly one offer per side was made before they settled; no side is stuck with a stray offer.
-    expect(a.pc.offersMade.length).toBeGreaterThanOrEqual(1);
+    a.pc.restartIce();
+    b.pc.restartIce();
+    await flush();
+    // No side is stuck holding a stray offer.
     expect(a.pc.remoteDescription?.type).toBe('answer');
     expect(b.pc.remoteDescription?.type).toBe('offer');
   });
@@ -89,6 +108,7 @@ describe('perfect negotiation', () => {
     expect(a.states.at(-1)).toBe('connected');
     expect(b.remote.length).toBeGreaterThan(0);
     expect(a.pc.transceivers.map((t) => t.sender.track)).toEqual([null, null]);
+    expect(a.pc.transceivers.every((t) => t.direction === 'sendrecv')).toBe(true);
   });
 
   it('does not throw on candidates for an offer it ignored', async () => {
@@ -97,6 +117,24 @@ describe('perfect negotiation', () => {
     await expect(
       a.link.handleSignal({ candidate: { candidate: 'candidate:1' } }),
     ).resolves.toBeUndefined();
+  });
+
+  it('keeps a candidate that arrives right behind a description that is still being applied', async () => {
+    const pc = new FakeRTCPeerConnection();
+    pc.remoteDelayMs = 20;
+    const link = new PeerLink({
+      pc: pc as unknown as RTCPeerConnection,
+      polite: true,
+      local: undefined,
+      logger,
+      send: () => undefined,
+      onRemoteStream: () => undefined,
+      onState: () => undefined,
+    });
+    const description = link.handleSignal({ description: { type: 'offer', sdp: 'o' } });
+    const candidate = link.handleSignal({ candidate: { candidate: 'candidate:early' } });
+    await Promise.all([description, candidate]);
+    expect(pc.candidates).toEqual([{ candidate: 'candidate:early' }]);
   });
 
   it('forwards candidates and the end-of-candidates marker', async () => {

@@ -53,7 +53,11 @@ export class FakeStream {
 interface FakeTransceiver {
   mid: string;
   direction: string;
-  sender: { track: FakeTrack | null; replaceTrack(track: FakeTrack | null): Promise<void> };
+  sender: {
+    track: FakeTrack | null;
+    replaceTrack(track: FakeTrack | null): Promise<void>;
+    setStreams(...streams: unknown[]): void;
+  };
   receiver: { track: { kind: 'audio' | 'video' } };
 }
 
@@ -74,6 +78,8 @@ export class FakeRTCPeerConnection {
   readonly transceivers: FakeTransceiver[] = [];
   readonly offersMade: number[] = [];
   readonly candidates: unknown[] = [];
+  /** Milliseconds `setRemoteDescription` takes, like a real browser. */
+  remoteDelayMs = 0;
   rollbacks = 0;
   iceRestarts = 0;
   closed = false;
@@ -95,7 +101,14 @@ export class FakeRTCPeerConnection {
   }
 
   addTrack(track: FakeTrack, _stream: FakeStream): { track: FakeTrack } {
-    this.#addTransceiver(track.kind, track);
+    // Like browsers: reuse a transceiver of that kind that is not sending yet.
+    const free = this.transceivers.find(
+      (t) => t.receiver.track.kind === track.kind && !t.sender.track,
+    );
+    if (free) {
+      free.sender.track = track;
+      free.direction = 'sendrecv';
+    } else this.#addTransceiver(track.kind, track);
     return { track };
   }
 
@@ -116,6 +129,7 @@ export class FakeRTCPeerConnection {
         replaceTrack: async (next) => {
           t.sender.track = next;
         },
+        setStreams: () => undefined,
       },
       receiver: { track: { kind } },
     };
@@ -155,6 +169,7 @@ export class FakeRTCPeerConnection {
   }
 
   async setRemoteDescription(desc: Description): Promise<void> {
+    if (this.remoteDelayMs > 0) await new Promise((r) => setTimeout(r, this.remoteDelayMs));
     if (desc.type === 'offer') {
       if (this.signalingState === 'have-local-offer') {
         // Implicit rollback, as browsers do for the polite peer.
@@ -165,6 +180,12 @@ export class FakeRTCPeerConnection {
         throw new DOMException('wrong state', 'InvalidStateError');
       this.remoteDescription = desc;
       this.signalingState = 'have-remote-offer';
+      // A remote offer brings its own transceivers, which start out receive-only.
+      for (const kind of ['audio', 'video'] as const) {
+        if (!this.transceivers.some((t) => t.receiver.track.kind === kind)) {
+          this.#addTransceiver(kind, null, 'recvonly');
+        }
+      }
     } else if (desc.type === 'answer') {
       if (this.signalingState !== 'have-local-offer') {
         throw new DOMException(

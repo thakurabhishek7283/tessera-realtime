@@ -35,6 +35,8 @@ export class PeerLink {
   state: PeerLinkState = 'new';
   readonly pc: RTCPeerConnection;
   readonly #opts: PeerLinkOptions;
+  #queue: Promise<void> = Promise.resolve();
+  #attached = false;
   #makingOffer = false;
   #ignoreOffer = false;
   #remote: MediaStream | undefined;
@@ -62,14 +64,37 @@ export class PeerLink {
     };
     pc.oniceconnectionstatechange = () => this.#onIce();
 
-    // Both directions exist from the start, so a track that appears later (turning the camera on,
-    // sharing the screen) is a `replaceTrack`, not a renegotiation.
+    // Exactly one side makes the first offer: the impolite one. If both did, the polite side would
+    // roll back mid-gathering, which some browsers answer by never gathering candidates again.
+    // The polite side attaches its tracks when that offer arrives.
+    if (!opts.polite) this.#attachLocal();
+    this.#set('connecting');
+  }
+
+  /**
+   * Gives the connection both directions for audio and video, so a track that appears later
+   * (camera turned on, screen shared) is a `replaceTrack`, not a renegotiation. Reuses the
+   * transceivers a remote offer created.
+   */
+  #attachLocal(): void {
+    if (this.#attached) return;
+    this.#attached = true;
+    const { pc } = this;
+    const local = this.#opts.local;
     for (const kind of ['audio', 'video'] as const) {
-      const track = opts.local?.getTracks().find((t) => t.kind === kind);
-      if (track && opts.local) pc.addTrack(track, opts.local);
+      const track = local?.getTracks().find((t) => t.kind === kind);
+      const free = pc
+        .getTransceivers()
+        .find((t) => t.receiver.track.kind === kind && !t.sender.track);
+      if (free) {
+        free.direction = 'sendrecv';
+        if (track && local) {
+          free.sender.setStreams?.(local);
+          void free.sender.replaceTrack(track);
+        }
+      } else if (track && local) pc.addTrack(track, local);
       else pc.addTransceiver(kind, { direction: 'sendrecv' });
     }
-    this.#set('connecting');
   }
 
   #set(state: PeerLinkState): void {
@@ -91,8 +116,17 @@ export class PeerLink {
     }
   }
 
-  /** Applies a description or ICE candidate received from the remote peer. */
-  async handleSignal({ description, candidate }: Signal): Promise<void> {
+  /**
+   * Applies a description or ICE candidate received from the remote peer. Signals are applied one
+   * at a time: a candidate that follows its description closely must wait until the description
+   * has really been applied, or the browser rejects it and the connection loses a route.
+   */
+  handleSignal(signal: Signal): Promise<void> {
+    this.#queue = this.#queue.then(() => this.#apply(signal));
+    return this.#queue;
+  }
+
+  async #apply({ description, candidate }: Signal): Promise<void> {
     const { pc } = this;
     if (this.state === 'closed') return;
     try {
@@ -103,6 +137,7 @@ export class PeerLink {
         if (this.#ignoreOffer) return;
         await pc.setRemoteDescription(description as RTCSessionDescriptionInit);
         if (description.type === 'offer') {
+          this.#attachLocal();
           await pc.setLocalDescription();
           this.#opts.send({ description: pc.localDescription?.toJSON() ?? undefined });
         }
