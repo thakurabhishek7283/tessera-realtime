@@ -24,3 +24,36 @@ test('chat history, live delivery and read state go through the server', async (
   await bob.reload();
   await expect(room(bob).locator('tessera-chat-message').last()).toContainText(text);
 });
+
+test('presence and a video call work through the server, with ICE servers from /v1/ice', async ({
+  context,
+}) => {
+  const alice = await context.newPage();
+  const bob = await context.newPage();
+  await alice.goto(url('presence', 'alice'));
+  await bob.goto(url('presence', 'bob'));
+  await expect(
+    alice.locator('tessera-presence').getByRole('img', { name: 'Bob Baker' }),
+  ).toBeVisible();
+
+  await alice.goto(url('video', 'alice'));
+  await bob.goto(url('video', 'bob'));
+  const call = 'tessera-call[call-id=playground]';
+  for (const page of [alice, bob]) {
+    await page.locator(call).getByRole('button', { name: 'Join call' }).click();
+    await expect(page.locator(`${call} .prejoin`)).toBeVisible();
+    await page.locator(call).getByRole('button', { name: 'Join', exact: true }).click();
+    await expect(page.locator(`${call} .controls`)).toBeVisible();
+  }
+  await expect
+    .poll(() =>
+      alice.locator(call).evaluate((el) => {
+        const tile = [...(el.shadowRoot?.querySelectorAll('tessera-video-tile') ?? [])].find(
+          (t) => t.getAttribute('name') === 'Bob Baker',
+        );
+        const video = tile?.shadowRoot?.querySelector('video');
+        return !!video && video.videoWidth > 0;
+      }),
+    )
+    .toBe(true);
+});

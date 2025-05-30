@@ -80,5 +80,43 @@
       "react",
       "react/jsx-runtime"
     ]
+  },
+  {
+    "name": "@tessera/video \u2014 entry + plugin",
+    "path": ["packages/video/dist/index.js", "packages/video/dist/plugin-*.js"],
+    "limit": "10 kB",
+    "gzip": true,
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/transport",
+      "@tessera/protocol",
+      "@tessera/react",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime"
+    ]
+  },
+  {
+    "name": "@tessera/video \u2014 elements (everything they can load)",
+    "path": "packages/video/dist/elements/index.js",
+    "limit": "18 kB",
+    "gzip": true,
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/transport",
+      "@tessera/protocol",
+      "@tessera/react",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime"
+    ]
   }
 ]

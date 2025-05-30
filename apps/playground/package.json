@@ -17,6 +17,7 @@
     "@tessera/presence": "workspace:*",
     "@tessera/storage": "^0.1.0",
     "@tessera/transport": "^0.1.0",
+    "@tessera/video": "workspace:*",
     "lit": "^3.3.0",
     "zod": "^4.1.0"
   },

@@ -15,7 +15,16 @@ export default defineConfig({
   use: {
     baseURL: 'http://127.0.0.1:4173',
     trace: 'retain-on-failure',
-    launchOptions: { ...(executablePath ? { executablePath } : {}), args: ['--no-sandbox'] },
+    launchOptions: {
+      ...(executablePath ? { executablePath } : {}),
+      // Chromium's fake camera and microphone and no permission prompt: real WebRTC, no hardware.
+      args: [
+        '--no-sandbox',
+        '--use-fake-device-for-media-stream',
+        '--use-fake-ui-for-media-stream',
+        '--disable-features=WebRtcHideLocalIpsWithMdns',
+      ],
+    },
   },
   webServer: {
     command: 'pnpm --filter playground build && pnpm --filter playground preview',

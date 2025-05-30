@@ -48,7 +48,15 @@ export async function createInstance(opts: InstanceOptions): Promise<TesseraInst
   const features: TesseraConfig['features'] = Object.fromEntries(
     SECTIONS.map((s) => [
       s.id,
-      { ...s.defaults, ...opts.configs[s.id], enabled: opts.enabled[s.id] ?? true },
+      {
+        ...s.defaults,
+        // Calls through the server get time-limited TURN credentials from it.
+        ...(s.id === 'video' && opts.mode === 'server'
+          ? { iceServersUrl: new URL('/v1/ice', opts.serverUrl).href }
+          : {}),
+        ...opts.configs[s.id],
+        enabled: opts.enabled[s.id] ?? true,
+      },
     ]),
   );
   const plugins: Record<string, PluginLoader> = Object.fromEntries(

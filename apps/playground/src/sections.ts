@@ -3,6 +3,7 @@ import type { TemplateResult } from 'lit';
 import type { z } from 'zod';
 import { chatSection } from './sections/chat.js';
 import { presenceSection } from './sections/presence.js';
+import { videoSection } from './sections/video.js';
 
 /** One kit in the playground: its plugin, its option schema and what it shows. */
 export interface Section {
@@ -24,4 +25,4 @@ export interface SectionContext {
 }
 
 /** One entry per kit, in tab order. */
-export const SECTIONS: Section[] = [presenceSection, chatSection];
+export const SECTIONS: Section[] = [presenceSection, chatSection, videoSection];

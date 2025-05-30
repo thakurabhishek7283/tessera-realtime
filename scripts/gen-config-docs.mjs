@@ -13,6 +13,7 @@ const check = process.argv.includes('--check');
 const targets = [
   { pkg: 'presence', schema: 'PresenceConfig' },
   { pkg: 'chat', schema: 'ChatConfig' },
+  { pkg: 'video', schema: 'VideoConfig' },
 ];
 
 const START = '<!-- config:start -->';
