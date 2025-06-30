@@ -57,3 +57,17 @@ test('presence and a video call work through the server, with ICE servers from /
     )
     .toBe(true);
 });
+
+test('comments are stored by the server and shown live to the other tab', async ({ context }) => {
+  const alice = await context.newPage();
+  const bob = await context.newPage();
+  await alice.goto(url('comments', 'alice'));
+  await bob.goto(url('comments', 'bob'));
+  const text = `from the server ${Date.now()}`;
+  const composer = alice.locator('tessera-comments tessera-comment-composer').first();
+  await composer.locator('textarea').fill(text);
+  await composer.getByRole('button', { name: 'Comment' }).click();
+  await expect(bob.locator('tessera-comments article').last()).toContainText(text);
+  await bob.reload();
+  await expect(bob.locator('tessera-comments article').last()).toContainText(text);
+});

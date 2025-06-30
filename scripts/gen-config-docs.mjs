@@ -14,6 +14,7 @@ const targets = [
   { pkg: 'presence', schema: 'PresenceConfig' },
   { pkg: 'chat', schema: 'ChatConfig' },
   { pkg: 'video', schema: 'VideoConfig' },
+  { pkg: 'comments', schema: 'CommentsConfig' },
 ];
 
 const START = '<!-- config:start -->';

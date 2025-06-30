@@ -118,5 +118,43 @@
       "react",
       "react/jsx-runtime"
     ]
+  },
+  {
+    "name": "@tessera/comments \u2014 entry + plugin",
+    "path": ["packages/comments/dist/index.js", "packages/comments/dist/plugin-*.js"],
+    "limit": "6 kB",
+    "gzip": true,
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/transport",
+      "@tessera/protocol",
+      "@tessera/react",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime"
+    ]
+  },
+  {
+    "name": "@tessera/comments \u2014 elements (everything they can load)",
+    "path": "packages/comments/dist/elements/index.js",
+    "limit": "13 kB",
+    "gzip": true,
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/transport",
+      "@tessera/protocol",
+      "@tessera/react",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime"
+    ]
   }
 ]

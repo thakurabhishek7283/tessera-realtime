@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tessera/chat": "workspace:*",
+    "@tessera/comments": "workspace:*",
     "@tessera/core": "^0.1.0",
     "@tessera/elements": "^0.1.0",
     "@tessera/presence": "workspace:*",

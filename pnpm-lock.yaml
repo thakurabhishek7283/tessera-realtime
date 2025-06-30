@@ -53,6 +53,9 @@ importers:
       '@tessera/chat':
         specifier: workspace:*
         version: link:../../packages/chat
+      '@tessera/comments':
+        specifier: workspace:*
+        version: link:../../packages/comments
       '@tessera/core':
         specifier: link:../../external/tessera/packages/core
         version: link:../../external/tessera/packages/core
