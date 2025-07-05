@@ -36,6 +36,9 @@ export class TesseraCommentsElement extends TesseraElement {
     css`
       :host {
         display: block;
+        color: var(--tessera-color-text);
+        /* Paint our own background so the tokens of the active theme always match what is behind the text. */
+        background: var(--tessera-color-bg);
       }
       header {
         display: flex;

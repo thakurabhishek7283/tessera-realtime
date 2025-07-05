@@ -20,7 +20,7 @@ export const chatSection: Section = {
   },
   render: ({ user }) => html`
     <p style="margin:0 0 var(--tessera-space-3)">Signed in as <strong>${USERS[user]?.name}</strong>. The floating button in the corner is <code>&lt;tessera-chat-launcher&gt;</code>.</p>
-    <tessera-inbox conversation="general" style="--tessera-chat-height: 36rem"></tessera-inbox>
+    <tessera-inbox conversation="general" style="--tessera-chat-height: 31rem"></tessera-inbox>
     <tessera-chat-launcher></tessera-chat-launcher>
   `,
 };

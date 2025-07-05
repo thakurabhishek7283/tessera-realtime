@@ -118,6 +118,10 @@ export class TesseraChatComposer extends TesseraElement {
         outline: 0;
         resize: none;
       }
+      /* The box around it shows the focus ring. */
+      textarea:focus-visible {
+        outline: 0;
+      }
       tessera-editor {
         flex: 1;
         min-width: 0;

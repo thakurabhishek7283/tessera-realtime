@@ -15,6 +15,6 @@ export const videoSection: Section = {
   render: ({ user }) => html`
     <p style="margin:0 0 var(--tessera-space-3)">Signed in as <strong>${USERS[user]?.name}</strong>. Everybody who opens call <code>playground</code> is in the same call.</p>
     <p style="margin:0 0 var(--tessera-space-3)"><tessera-call-button call-id="playground-dialog">Open the call in a dialog</tessera-call-button></p>
-    <tessera-call call-id="playground" style="--tessera-call-height: 34rem"></tessera-call>
+    <tessera-call call-id="playground" style="--tessera-call-height: 30rem"></tessera-call>
   `,
 };
