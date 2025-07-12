@@ -205,3 +205,21 @@ describe('<tessera-call-button>', () => {
     expect(a.instance.feature('video')?.call('demo').state.get().phase).toBe('idle');
   });
 });
+
+describe('theme and language', () => {
+  it('speaks German and stays accessible in the dark theme', async () => {
+    const hub = new FakeHub();
+    const a = await mountTab(hub, CALL, alice);
+    a.instance.setTheme('dark');
+    a.instance.setLocale('de');
+    await until(() => buttonIn(a.el, 'Anruf beitreten'));
+    buttonIn(a.el, 'Anruf beitreten').click();
+    await until(() => shadow(a.el, '.prejoin'));
+    await until(() => (videoOf(tilesOf(a.el)[0] as HTMLElement)?.videoWidth ?? 0) > 0);
+    await expectAccessible(a.el);
+    buttonIn(a.el, 'Beitreten').click();
+    await until(() => shadow(a.el, '.controls'));
+    expect(buttonIn(a.el, 'Mikrofon ausschalten')).toBeTruthy();
+    await expectAccessible(a.el);
+  });
+});

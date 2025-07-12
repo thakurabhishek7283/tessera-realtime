@@ -266,3 +266,19 @@ describe('when the thread cannot be loaded', () => {
     await until(() => gets > seen);
   });
 });
+
+describe('theme and language', () => {
+  it('stays accessible in the dark theme and follows the language', async () => {
+    const world = newWorld();
+    const { el, tab } = await mountTab(world, THREAD, alice, { ratings: true, resolve: true });
+    const thread = await tab.api.thread('listing-1');
+    await thread.add(text('schön'), { rating: 4 });
+    await until(() => items(el).length === 1);
+    tab.instance.setTheme('dark');
+    await new Promise((r) => setTimeout(r, 100));
+    await expectAccessible(el);
+    tab.instance.setLocale('de');
+    await until(() => el.shadowRoot?.querySelector('h2')?.textContent === '1 Kommentar');
+    await expectAccessible(el);
+  });
+});

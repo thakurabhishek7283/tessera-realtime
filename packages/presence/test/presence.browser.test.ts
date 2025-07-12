@@ -192,3 +192,26 @@ describe('when a scope cannot be joined', () => {
     expect(attempts).toBe(1);
   });
 });
+
+describe('theme and language', () => {
+  it('stays accessible in the dark theme and follows the language', async () => {
+    const hub = new FakeHub();
+    const { el, root } = await mountPresence(
+      hub,
+      '<tessera-presence scope="page" max="1"></tessera-presence>',
+    );
+    for (const user of [bob, carol]) await (await tab(hub, user)).api.join('page');
+    await until(() => el.shadowRoot?.querySelector('.more'));
+    const instance = (
+      root as unknown as { tessera: { setTheme(m: string): void; setLocale(l: string): void } }
+    ).tessera;
+    instance.setTheme('dark');
+    await new Promise((r) => setTimeout(r, 100));
+    await expectAccessible(el);
+    instance.setLocale('de');
+    await until(
+      () =>
+        el.shadowRoot?.querySelector('.more')?.getAttribute('aria-label') === '1 weitere Person',
+    );
+  });
+});

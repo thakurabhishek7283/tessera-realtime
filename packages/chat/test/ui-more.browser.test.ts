@@ -251,3 +251,26 @@ describe('when a conversation cannot be opened', () => {
     await until(() => calls > seen);
   });
 });
+
+describe('theme and language', () => {
+  it('stays accessible in the dark theme and follows the language', async () => {
+    const world = await newWorld('server');
+    const other = await (await world.tab(bob)).api.openConversation('general');
+    await other.send(text('hallo'));
+    const { el, tab } = await mountTab(
+      world,
+      '<tessera-chat conversation="general"></tessera-chat>',
+    );
+    await until(() => messageEls(el).length === 1);
+    tab.instance.setTheme('dark');
+    await new Promise((r) => setTimeout(r, 100));
+    await expectAccessible(el);
+    tab.instance.setLocale('de');
+    await until(
+      () =>
+        composerOf(el).shadowRoot?.querySelector('textarea')?.getAttribute('placeholder') ===
+        'Nachricht schreiben…',
+    );
+    await expectAccessible(el);
+  });
+});
