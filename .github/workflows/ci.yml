@@ -57,3 +57,41 @@ jobs:
             playwright-report
             test-results
           retention-days: 7
+
+  # The same end-to-end tests against a real tessera-server, started in dev mode (guest tokens).
+  server:
+    name: End-to-end tests against tessera-server
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: node scripts/fetch-deps.mjs --ci
+      - run: pnpm install --frozen-lockfile
+      - run: npx playwright install --with-deps chromium
+      - run: pnpm build
+      - name: Build and start tessera-server
+        run: |
+          git clone --depth 1 --branch v0.1.0 https://github.com/thakurabhishek7283/tessera-server.git "$RUNNER_TEMP/tessera-server"
+          cd "$RUNNER_TEMP/tessera-server"
+          node scripts/fetch-deps.mjs --ci
+          pnpm install --frozen-lockfile
+          pnpm build
+          PORT=8787 AUTH_MODE=dev CORS_ORIGINS='*' DATABASE_PATH="$RUNNER_TEMP/tessera.db" nohup node dist/main.js > "$RUNNER_TEMP/server.log" 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8787/health && break; sleep 1; done
+      - run: pnpm e2e
+        env:
+          TESSERA_SERVER_URL: http://127.0.0.1:8787
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: server-e2e-report
+          path: |
+            playwright-report
+            test-results
+            ${{ runner.temp }}/server.log
+          retention-days: 7

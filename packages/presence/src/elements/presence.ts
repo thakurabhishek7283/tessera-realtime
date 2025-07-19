@@ -44,7 +44,7 @@ export class TesseraPresenceElement extends TesseraElement {
       }
       .stack li + li,
       .stack li + .more {
-        margin-inline-start: -8px;
+        margin-inline-start: -6px;
       }
       .dot {
         position: absolute;
