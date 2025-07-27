@@ -3,7 +3,7 @@ import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } fr
 import type { Comment, CommentNode, CommentsApi, ThreadController } from '../types.js';
 import { linkify, plainText } from '../ui-util.js';
 import type { ComposerSubmit } from './composer.js';
-import { richAvailable } from './editor-bridge.js';
+import { richAvailable, watchEditor } from './editor-bridge.js';
 
 /**
  * `<tessera-comments target="listing-42">`: the discussion of one thing: a composer, comments
@@ -232,6 +232,7 @@ export class TesseraCommentsElement extends TesseraElement {
   #failedFor: string | undefined;
   #offs: Array<() => void> = [];
   #known = new Set<string>();
+  #offEditor: (() => void) | undefined;
 
   get #api(): CommentsApi | undefined {
     return this.ctx.services.get('comments');
@@ -244,6 +245,8 @@ export class TesseraCommentsElement extends TesseraElement {
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
+    this.#offEditor?.();
+    this.#offEditor = undefined;
     this.#teardown();
   }
 
@@ -251,6 +254,7 @@ export class TesseraCommentsElement extends TesseraElement {
     super.updated(changed);
     const api = this.#api;
     const id = this.target;
+    if (this.enabled) this.#offEditor ??= watchEditor(this.ctx, () => this.requestUpdate());
     if (!this.enabled || !api || !id) {
       if (this.controller) this.#teardown();
       return;

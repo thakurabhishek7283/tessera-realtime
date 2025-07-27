@@ -282,3 +282,60 @@ describe('theme and language', () => {
     await expectAccessible(el);
   });
 });
+
+describe('rich comments through the editor kit', () => {
+  it('composes with the editor when it is available and shows the result with its renderer', async () => {
+    if (!customElements.get('tessera-editor')) {
+      customElements.define(
+        'tessera-editor',
+        class extends HTMLElement {
+          doc: unknown = { type: 'doc', content: [{ type: 'paragraph' }] };
+          editor = {
+            getJSON: () => this.doc,
+            setContent: (doc: unknown) => {
+              this.doc = doc;
+            },
+            focus: () => undefined,
+          };
+          type(value: string): void {
+            this.doc = {
+              type: 'doc',
+              content: [{ type: 'paragraph', content: [{ type: 'text', text: value }] }],
+            };
+            this.dispatchEvent(
+              new CustomEvent('change', { detail: { value: { isEmpty: false } } }),
+            );
+          }
+        },
+      );
+    }
+    if (!customElements.get('tessera-rich-text')) {
+      customElements.define(
+        'tessera-rich-text',
+        class extends HTMLElement {
+          set doc(value: { content?: Array<{ content?: Array<{ text?: string }> }> }) {
+            this.textContent = `rich:${value.content?.[0]?.content?.[0]?.text ?? ''}`;
+          }
+        },
+      );
+    }
+    const world = newWorld();
+    const { el, tab } = await mountTab(world, THREAD);
+    (
+      tab.instance.ctx.services as unknown as { register(id: string, impl: unknown): void }
+    ).register('editor', {});
+    const composer = await until(() => composerOf(el));
+    const editor = await until(() =>
+      composer.shadowRoot?.querySelector<HTMLElement & { type(t: string): void }>('tessera-editor'),
+    );
+    editor.type('styled');
+    const submit = must(
+      composer.shadowRoot?.querySelector<HTMLElement>('tessera-button[part=submit]'),
+    );
+    await until(() => !submit.hasAttribute('disabled'));
+    submit.click();
+    await until(() => items(el).length === 1);
+    const rendered = await until(() => items(el)[0]?.querySelector('tessera-rich-text'));
+    expect(rendered.textContent).toBe('rich:styled');
+  });
+});

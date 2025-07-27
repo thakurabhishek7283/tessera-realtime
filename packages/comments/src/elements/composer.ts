@@ -2,7 +2,7 @@ import { baseStyles, focusRing, TesseraElement } from '@tessera/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import type { CommentBody } from '../types.js';
 import { plainText } from '../ui-util.js';
-import { richAvailable } from './editor-bridge.js';
+import { richAvailable, watchEditor } from './editor-bridge.js';
 
 export interface ComposerSubmit {
   body: CommentBody;
@@ -91,6 +91,19 @@ export class TesseraCommentComposer extends TesseraElement {
   text = '';
   rating: number | undefined;
   richEmpty = true;
+
+  #offEditor: (() => void) | undefined;
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#offEditor?.();
+    this.#offEditor = undefined;
+  }
+
+  protected override updated(changed: Map<PropertyKey, unknown>): void {
+    super.updated(changed);
+    if (this.enabled) this.#offEditor ??= watchEditor(this.ctx, () => this.requestUpdate());
+  }
 
   get #useRich(): boolean {
     return this.rich && richAvailable(this.ctx);

@@ -5,7 +5,7 @@ import { QUICK_REACTIONS } from '../emoji.js';
 import { previewText } from '../messages.js';
 import type { Attachment, Message } from '../types.js';
 import { linkify, timeLabel } from '../ui-util.js';
-import { richAvailable } from './editor-bridge.js';
+import { richAvailable, watchEditor } from './editor-bridge.js';
 
 export type MessageAction = 'react' | 'reply' | 'edit' | 'delete' | 'copy' | 'retry' | 'jump';
 
@@ -312,6 +312,22 @@ export class TesseraChatMessage extends TesseraElement {
   now = Date.now();
   readonly = false;
   reacting = false;
+
+  #offEditor: (() => void) | undefined;
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#offEditor?.();
+    this.#offEditor = undefined;
+  }
+
+  protected override updated(changed: Map<PropertyKey, unknown>): void {
+    super.updated(changed);
+    // Rich bodies render differently once the editor kit is there.
+    if (this.enabled && this.message?.body.type === 'rich') {
+      this.#offEditor ??= watchEditor(this.ctx, () => this.requestUpdate());
+    }
+  }
 
   protected override willUpdate(changed: Map<PropertyKey, unknown>): void {
     super.willUpdate(changed);

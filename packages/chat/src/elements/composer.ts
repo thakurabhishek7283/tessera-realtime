@@ -8,7 +8,7 @@ import {
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import { previewText } from '../messages.js';
 import type { Message, MessageBody } from '../types.js';
-import { richAvailable } from './editor-bridge.js';
+import { richAvailable, watchEditor } from './editor-bridge.js';
 
 export interface ComposerSubmit {
   body: MessageBody;
@@ -181,6 +181,7 @@ export class TesseraChatComposer extends TesseraElement {
   richEmpty = true;
 
   #typing = false;
+  #offEditor: (() => void) | undefined;
   #editorValue: unknown;
 
   get #rich(): boolean {
@@ -208,8 +209,15 @@ export class TesseraChatComposer extends TesseraElement {
     }
   }
 
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#offEditor?.();
+    this.#offEditor = undefined;
+  }
+
   protected override updated(changed: Map<PropertyKey, unknown>): void {
     super.updated(changed);
+    if (this.enabled) this.#offEditor ??= watchEditor(this.ctx, () => this.requestUpdate());
     this.toggleAttribute('dragging', this.dragging);
     const area = this.renderRoot.querySelector<HTMLTextAreaElement>('textarea');
     if (area) {
