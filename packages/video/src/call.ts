@@ -397,6 +397,9 @@ export function createCall(opts: CallOptions): CallController {
     finished = true;
     const wasInCall = phaseIs('in-call');
     await teardown();
+    // Forget the controller first: whoever reacts to the new phase may ask the API for this call
+    // again and should get a fresh one, not this finished one.
+    opts.onEnded();
     state.set((s) => ({
       ...s,
       phase: error && error.reason !== 'connection-lost' ? 'error' : 'ended',
@@ -406,7 +409,6 @@ export function createCall(opts: CallOptions): CallController {
       local: { ...s.local, stream: undefined, screen: false, screenStream: undefined, level: 0 },
     }));
     if (wasInCall) ctx.bus.emit('video:left', { callId: id });
-    opts.onEnded();
   };
 
   const watchTransport = (): void => {
@@ -502,9 +504,9 @@ export function createCall(opts: CallOptions): CallController {
       const failure: CallError = full
         ? { reason: 'room-full', message: 'This call is full.' }
         : { reason: 'unknown', message: error instanceof Error ? error.message : String(error) };
-      state.set((s) => ({ ...s, phase: 'error', error: failure }));
       finished = true;
       opts.onEnded();
+      state.set((s) => ({ ...s, phase: 'error', error: failure }));
       throw error;
     }
   };

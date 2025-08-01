@@ -410,3 +410,19 @@ describe('layout and presence', () => {
     expect(joined.at(-1)).toBe('left');
   });
 });
+
+describe('forgetting a finished call', () => {
+  it('hands out a fresh controller to anyone who reacts to the end of the call', async () => {
+    const hub = new FakeHub();
+    const a = await person(hub, 'r', alice);
+    let fresh: unknown;
+    a.call.state.subscribe((s) => {
+      if (s.phase === 'ended') fresh = a.api.call('r');
+    });
+    await a.call.start();
+    await a.call.leave();
+    expect(fresh).toBeDefined();
+    expect(fresh).not.toBe(a.call);
+    expect((fresh as typeof a.call).state.get().phase).toBe('idle');
+  });
+});
