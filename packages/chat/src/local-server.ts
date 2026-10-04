@@ -7,13 +7,13 @@ import {
   TopicSchemas,
 } from '@tessera-kit/protocol';
 import { type Collection, createCollection } from '@tessera-kit/storage';
-import { z } from 'zod';
+import * as z from 'zod/mini';
 import { DELETED_TEXT, type RequestContext } from './topics.js';
 
 const DirectDoc = z.object({
   id: z.string(),
   kind: z.literal('direct'),
-  members: z.array(z.string()).length(2),
+  members: z.array(z.string()).check(z.length(2)),
   createdAt: z.string(),
 });
 const ReadDoc = z.object({ conversationId: z.string(), userId: z.string(), messageId: z.string() });

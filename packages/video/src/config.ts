@@ -1,64 +1,68 @@
-import { z } from 'zod';
+import * as z from 'zod/mini';
 
 const IceServer = z.object({
   urls: z.union([z.string(), z.array(z.string())]),
-  username: z.string().optional(),
-  credential: z.string().optional(),
+  username: z.optional(z.string()),
+  credential: z.optional(z.string()),
 });
 
 /** Options of the `video` feature. `{ enabled: true }` alone is valid. */
 export const VideoConfig = z.object({
   enabled: z.boolean(),
   maxParticipants: z
-    .number()
-    .int()
-    .min(2)
-    .max(6)
-    .default(4)
-    .describe(
-      'Largest number of people in one call. Every extra person adds a connection per participant (mesh).',
+    ._default(z.int().check(z.gte(2), z.lte(6)), 4)
+    .check(
+      z.describe(
+        'Largest number of people in one call. Every extra person adds a connection per participant (mesh).',
+      ),
     ),
   iceServers: z
-    .array(IceServer)
-    .optional()
-    .describe(
-      'STUN/TURN servers. Defaults to a public STUN server when neither this nor `iceServersUrl` is set.',
+    .optional(z.array(IceServer))
+    .check(
+      z.describe(
+        'STUN/TURN servers. Defaults to a public STUN server when neither this nor `iceServersUrl` is set.',
+      ),
     ),
   iceServersUrl: z
-    .string()
-    .optional()
-    .describe(
-      'URL returning `{ iceServers }` (tessera-server: `/v1/ice`), fetched with the user token before joining.',
+    .optional(z.string())
+    .check(
+      z.describe(
+        'URL returning `{ iceServers }` (tessera-server: `/v1/ice`), fetched with the user token before joining.',
+      ),
     ),
-  prejoin: z.boolean().default(true).describe('Show a device preview before joining.'),
-  allow: z
-    .object({
-      screenShare: z.boolean().default(true),
+  prejoin: z._default(z.boolean(), true).check(z.describe('Show a device preview before joining.')),
+  allow: z._default(
+    z.object({
+      screenShare: z._default(z.boolean(), true),
       chatPanel: z
-        .boolean()
-        .default(true)
-        .describe('Offer a chat panel in the call when the `chat` kit is enabled.'),
-      recording: z.literal(false).default(false).describe('Recording is not supported.'),
-    })
-    .default({ screenShare: true, chatPanel: true, recording: false }),
-  defaults: z
-    .object({
-      audio: z.boolean().default(true).describe('Microphone on when joining.'),
-      video: z.boolean().default(true).describe('Camera on when joining.'),
-    })
-    .default({ audio: true, video: true }),
+        ._default(z.boolean(), true)
+        .check(z.describe('Offer a chat panel in the call when the `chat` kit is enabled.')),
+      recording: z
+        ._default(z.literal(false), false)
+        .check(z.describe('Recording is not supported.')),
+    }),
+    { screenShare: true, chatPanel: true, recording: false },
+  ),
+  defaults: z._default(
+    z.object({
+      audio: z._default(z.boolean(), true).check(z.describe('Microphone on when joining.')),
+      video: z._default(z.boolean(), true).check(z.describe('Camera on when joining.')),
+    }),
+    { audio: true, video: true },
+  ),
   video: z
-    .object({
-      width: z.number().int().default(1280),
-      height: z.number().int().default(720),
-      frameRate: z.number().default(24),
-    })
-    .default({ width: 1280, height: 720, frameRate: 24 })
-    .describe('Camera constraints (ideal values).'),
+    ._default(
+      z.object({
+        width: z._default(z.int(), 1280),
+        height: z._default(z.int(), 720),
+        frameRate: z._default(z.number(), 24),
+      }),
+      { width: 1280, height: 720, frameRate: 24 },
+    )
+    .check(z.describe('Camera constraints (ideal values).')),
   layout: z
-    .enum(['grid', 'spotlight'])
-    .default('grid')
-    .describe('How tiles are arranged at the start.'),
+    ._default(z.enum(['grid', 'spotlight']), 'grid')
+    .check(z.describe('How tiles are arranged at the start.')),
 });
 
 export type VideoConfigValue = z.infer<typeof VideoConfig>;
