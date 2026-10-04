@@ -1,0 +1,18 @@
+{
+  "chat-page": {
+    "initialGzip": 70700,
+    "totalGzip": 97300
+  },
+  "comments-page": {
+    "initialGzip": 61600,
+    "totalGzip": 79000
+  },
+  "presence-page": {
+    "initialGzip": 59400,
+    "totalGzip": 74100
+  },
+  "video-page": {
+    "initialGzip": 62800,
+    "totalGzip": 83300
+  }
+}
