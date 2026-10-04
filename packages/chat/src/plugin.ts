@@ -1,4 +1,4 @@
-import { definePlugin } from '@tessera/core';
+import { definePlugin } from '@tessera-kit/core';
 import { createChatApi } from './api.js';
 import { ChatConfig } from './config.js';
 import { de } from './i18n/de.js';
@@ -13,7 +13,7 @@ const disposers = new WeakMap<ChatApi, () => Promise<void>>();
  * server transport (tessera-server) history and read state live on the server.
  *
  * @example
- * createTessera(cfg, { plugins: { chat: () => import('@tessera/chat') } });
+ * createTessera(cfg, { plugins: { chat: () => import('@tessera-kit/chat') } });
  */
 export const chatPlugin = definePlugin({
   id: 'chat',

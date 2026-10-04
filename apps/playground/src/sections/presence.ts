@@ -1,5 +1,5 @@
-import { PresenceConfig } from '@tessera/presence';
-import '@tessera/presence/elements';
+import { PresenceConfig } from '@tessera-kit/presence';
+import '@tessera-kit/presence/elements';
 import { html } from 'lit';
 import type { Section } from '../sections.js';
 import { USERS } from '../users.js';
@@ -10,7 +10,7 @@ export const presenceSection: Section = {
   blurb:
     'Open another tab as a different user to see the avatar stack, status dots and live pointers. Switch tabs or stop moving to see the status change.',
   schema: PresenceConfig,
-  load: () => import('@tessera/presence'),
+  load: () => import('@tessera-kit/presence'),
   defaults: { scope: 'playground', idleAfterMs: 15_000, maxAvatars: 3 },
   render: ({ user }) => html`
     <div style="display:flex;align-items:center;gap:var(--tessera-space-3);margin-bottom:var(--tessera-space-3)">

@@ -1,4 +1,4 @@
-import type { TesseraContext } from '@tessera/core';
+import type { TesseraContext } from '@tessera-kit/core';
 import { browserEnv, type CallEnv, createCall } from './call.js';
 import type { VideoConfigValue } from './config.js';
 import type { CallController, VideoApi } from './types.js';

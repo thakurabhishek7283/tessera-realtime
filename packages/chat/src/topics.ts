@@ -1,4 +1,4 @@
-import type { UserInfo } from '@tessera/core';
+import type { UserInfo } from '@tessera-kit/core';
 
 /** Room carrying a conversation's live events (the transport adds the app prefix). */
 export const chatRoomName = (conversationId: string): string => `chat:${conversationId}`;

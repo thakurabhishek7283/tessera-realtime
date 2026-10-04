@@ -1,4 +1,4 @@
-import { definePlugin } from '@tessera/core';
+import { definePlugin } from '@tessera-kit/core';
 import { createVideoApi } from './api.js';
 import { VideoConfig } from './config.js';
 import { de } from './i18n/de.js';
@@ -14,7 +14,7 @@ const disposers = new WeakMap<VideoApi, () => Promise<void>>();
  * networks).
  *
  * @example
- * createTessera(cfg, { plugins: { video: () => import('@tessera/video') } });
+ * createTessera(cfg, { plugins: { video: () => import('@tessera-kit/video') } });
  */
 export const videoPlugin = definePlugin({
   id: 'video',

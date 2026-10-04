@@ -1,7 +1,7 @@
-import '@tessera/elements/define';
+import '@tessera-kit/elements/define';
 import '../src/elements/index.js';
-import type { UserInfo } from '@tessera/core';
-import { alice, FakeHub } from '@tessera/testing';
+import type { UserInfo } from '@tessera-kit/core';
+import { alice, FakeHub } from '@tessera-kit/testing';
 import { must, settle } from '@tessera-internal/test-utils';
 import type { TesseraChatElement, TesseraMessageList } from '../src/elements/index.js';
 import type { ChatOptions } from './env.js';

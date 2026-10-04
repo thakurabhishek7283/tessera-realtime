@@ -4,7 +4,7 @@ Status: accepted
 
 ## Context
 
-Chat is more than message passing: it has history, edits, reactions, read markers and unread counts, and tessera-server already implements them behind the `chat.*` requests of `@tessera/protocol`. The live demo has to work on static hosting, where there is no server, and the kit should not grow a second code path for "no backend".
+Chat is more than message passing: it has history, edits, reactions, read markers and unread counts, and tessera-server already implements them behind the `chat.*` requests of `@tessera-kit/protocol`. The live demo has to work on static hosting, where there is no server, and the kit should not grow a second code path for "no backend".
 
 ## Decision
 

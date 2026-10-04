@@ -5,8 +5,8 @@ import {
   TesseraError,
   type Transport,
   type UserInfo,
-} from '@tessera/core';
-import { ChatConversationsRes, ChatOpenDirectRes, TopicSchemas } from '@tessera/protocol';
+} from '@tessera-kit/core';
+import { ChatConversationsRes, ChatOpenDirectRes, TopicSchemas } from '@tessera-kit/protocol';
 import type { ChatConfigValue } from './config.js';
 import { createLocalChatServer } from './local-server.js';
 import { installNotifications } from './notify.js';
@@ -31,7 +31,7 @@ interface RegistersHandlers {
     fn: (
       data: unknown,
       ctx: {
-        user: import('@tessera/core').UserInfo;
+        user: import('@tessera-kit/core').UserInfo;
         broadcast(topic: string, data: unknown): void;
       },
     ) => unknown,

@@ -1,12 +1,12 @@
-import { type TesseraContext, TesseraError, type UserInfo } from '@tessera/core';
+import { type TesseraContext, TesseraError, type UserInfo } from '@tessera-kit/core';
 import {
   type MessageDto,
   Message as MessageSchema,
   type TopicRequest,
   type TopicResponse,
   TopicSchemas,
-} from '@tessera/protocol';
-import { type Collection, createCollection } from '@tessera/storage';
+} from '@tessera-kit/protocol';
+import { type Collection, createCollection } from '@tessera-kit/storage';
 import { z } from 'zod';
 import { DELETED_TEXT, type RequestContext } from './topics.js';
 

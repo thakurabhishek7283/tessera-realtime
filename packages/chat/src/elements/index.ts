@@ -1,4 +1,4 @@
-import { defineElement, registerImplicitPlugin } from '@tessera/elements';
+import { defineElement, registerImplicitPlugin } from '@tessera-kit/elements';
 import { TesseraChatElement } from './chat.js';
 import { TesseraChatComposer } from './composer.js';
 import { TesseraChatMessage } from './message.js';

@@ -1,4 +1,4 @@
-import { baseStyles, focusRing, TesseraElement } from '@tessera/elements';
+import { baseStyles, focusRing, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 
 /** The part of the presence kit the button uses to count people in a call. */

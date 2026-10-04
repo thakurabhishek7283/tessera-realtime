@@ -1,4 +1,4 @@
-import { alice, bob, carol, FakeHub } from '@tessera/testing';
+import { alice, bob, carol, FakeHub } from '@tessera-kit/testing';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { trackActivity } from '../src/activity.js';
 import { groupPeers } from '../src/handle.js';

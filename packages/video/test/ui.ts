@@ -1,9 +1,9 @@
-import '@tessera/elements/define';
+import '@tessera-kit/elements/define';
 import '../src/elements/index.js';
-import '@tessera/presence/elements';
-import '@tessera/chat/elements';
-import type { UserInfo } from '@tessera/core';
-import { alice, createTestInstance, type FakeHub } from '@tessera/testing';
+import '@tessera-kit/presence/elements';
+import '@tessera-kit/chat/elements';
+import type { UserInfo } from '@tessera-kit/core';
+import { alice, createTestInstance, type FakeHub } from '@tessera-kit/testing';
 import { must, settle } from '@tessera-internal/test-utils';
 
 export { until } from '@tessera-internal/test-utils';
@@ -23,8 +23,8 @@ export async function mountTab(
     },
     {
       video: () => import('../src/plugin.js'),
-      presence: () => import('@tessera/presence'),
-      chat: () => import('@tessera/chat'),
+      presence: () => import('@tessera-kit/presence'),
+      chat: () => import('@tessera-kit/chat'),
     },
     { hub, user },
   );

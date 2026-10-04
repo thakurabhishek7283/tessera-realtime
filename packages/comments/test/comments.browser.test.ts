@@ -1,4 +1,4 @@
-import { alice, bob } from '@tessera/testing';
+import { alice, bob } from '@tessera-kit/testing';
 import { cleanup, expectAccessible, must } from '@tessera-internal/test-utils';
 import { afterEach, describe, expect, it } from 'vitest';
 import { userEvent } from 'vitest/browser';

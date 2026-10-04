@@ -1,4 +1,4 @@
-# @tessera/comments
+# @tessera-kit/comments
 
 Comment threads for any web app: attach a discussion to a listing, a card, an annotation, anything with an id. Replies, reactions, edit and delete, optional star ratings with an average and distribution, a resolve toggle and live updates, as a headless API, web components and React bindings. Part of [tessera-realtime](../../README.md).
 
@@ -10,7 +10,7 @@ It needs a storage adapter and nothing else. A transport is optional: with one, 
 
 ```html
 <script type="module">
-  import '@tessera/comments/elements';
+  import '@tessera-kit/comments/elements';
 </script>
 
 <h2>Lakeside pitch <tessera-comment-count target="campsite-17"></tessera-comment-count></h2>
@@ -22,9 +22,9 @@ A bare tag works without any setup: it switches the feature on in an implicit in
 ### With `createTessera`
 
 ```ts
-import { createTessera } from '@tessera/core';
-import { createStorage } from '@tessera/storage';
-import { createTransport } from '@tessera/transport';
+import { createTessera } from '@tessera-kit/core';
+import { createStorage } from '@tessera-kit/storage';
+import { createTransport } from '@tessera-kit/transport';
 
 const tessera = createTessera(
   {
@@ -34,7 +34,7 @@ const tessera = createTessera(
     features: { comments: { enabled: true, ratings: true } }, // ratings: reviews
   },
   {
-    plugins: { comments: () => import('@tessera/comments') },
+    plugins: { comments: () => import('@tessera-kit/comments') },
     adapters: { storage: createStorage, transport: createTransport },
   },
 );
@@ -48,7 +48,7 @@ thread?.state.subscribe(({ comments, summary }) => console.log(comments.length, 
 ### React
 
 ```tsx
-import { CommentCount, Comments, useThread } from '@tessera/comments/react';
+import { CommentCount, Comments, useThread } from '@tessera-kit/comments/react';
 
 function Listing({ id }: { id: string }) {
   const { state } = useThread(id);
@@ -64,7 +64,7 @@ function Listing({ id }: { id: string }) {
 
 ### With other Tessera kits
 
-Kits never import each other; they meet through the service registry. Enable the `editor` kit (and import `@tessera/editor/elements`) and comments are written and shown as rich text (`rich`, on by default; plain text otherwise); add `mentions` to offer `@` mentions of the people in the thread.
+Kits never import each other; they meet through the service registry. Enable the `editor` kit (and import `@tessera-kit/editor/elements`) and comments are written and shown as rich text (`rich`, on by default; plain text otherwise); add `mentions` to offer `@` mentions of the people in the thread.
 
 ## Configuration
 

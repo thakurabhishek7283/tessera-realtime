@@ -1,4 +1,4 @@
-import type { Logger } from '@tessera/core';
+import type { Logger } from '@tessera-kit/core';
 import type { VideoConfigValue } from './config.js';
 import type { CallError, Device, DeviceKind } from './types.js';
 

@@ -1,4 +1,4 @@
-import { baseStyles, focusRing, TesseraElement, visuallyHidden } from '@tessera/elements';
+import { baseStyles, focusRing, TesseraElement, visuallyHidden } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 import type { PresenceUser } from '../types.js';

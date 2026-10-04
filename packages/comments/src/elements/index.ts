@@ -1,4 +1,4 @@
-import { defineElement, registerImplicitPlugin } from '@tessera/elements';
+import { defineElement, registerImplicitPlugin } from '@tessera-kit/elements';
 import { TesseraCommentsElement } from './comments.js';
 import { TesseraCommentComposer } from './composer.js';
 import { TesseraCommentCount } from './count.js';

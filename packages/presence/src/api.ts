@@ -1,5 +1,5 @@
-import type { TesseraContext } from '@tessera/core';
-import { TesseraError } from '@tessera/core';
+import type { TesseraContext } from '@tessera-kit/core';
+import { TesseraError } from '@tessera-kit/core';
 import type { PresenceConfigValue } from './config.js';
 import { createPresenceHandle, type SharedPresence } from './handle.js';
 import type { PresenceApi, PresenceHandle } from './types.js';

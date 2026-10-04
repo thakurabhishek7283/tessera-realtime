@@ -1,5 +1,5 @@
-import type { UserInfo } from '@tessera/core';
-import { alice, createTestInstance, type FakeHub, type TestInstance } from '@tessera/testing';
+import type { UserInfo } from '@tessera-kit/core';
+import { alice, createTestInstance, type FakeHub, type TestInstance } from '@tessera-kit/testing';
 import type { PresenceApi } from '../src/index.js';
 
 export interface Env extends TestInstance {

@@ -1,5 +1,5 @@
-import { createStore, type ReadonlyStore, type TesseraContext } from '@tessera/core';
-import { createCollection } from '@tessera/storage';
+import { createStore, type ReadonlyStore, type TesseraContext } from '@tessera-kit/core';
+import { createCollection } from '@tessera-kit/storage';
 import type { CommentsConfigValue } from './config.js';
 import { ThreadSchema } from './schemas.js';
 import { openThread } from './thread.js';

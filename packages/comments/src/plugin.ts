@@ -1,4 +1,4 @@
-import { definePlugin } from '@tessera/core';
+import { definePlugin } from '@tessera-kit/core';
 import { createCommentsApi } from './api.js';
 import { CommentsConfig } from './config.js';
 import { de } from './i18n/de.js';
@@ -13,7 +13,7 @@ const disposers = new WeakMap<CommentsApi, () => void>();
  * up as they are written.
  *
  * @example
- * createTessera(cfg, { plugins: { comments: () => import('@tessera/comments') } });
+ * createTessera(cfg, { plugins: { comments: () => import('@tessera-kit/comments') } });
  */
 export const commentsPlugin = definePlugin({
   id: 'comments',

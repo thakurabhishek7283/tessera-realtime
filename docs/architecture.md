@@ -5,7 +5,7 @@ This page is for people changing the code. The user-facing view is in the [packa
 ## Packages
 
 ```text
-   @tessera/core   @tessera/elements   @tessera/storage   @tessera/transport   @tessera/protocol
+   @tessera-kit/core   @tessera-kit/elements   @tessera-kit/storage   @tessera-kit/transport   @tessera-kit/protocol
         ▲                  ▲                   ▲                   ▲                   ▲
         │                  │                   │                   │                   │
    presence ◀── (service registry, optional) ── chat · video · comments
@@ -15,7 +15,7 @@ This page is for people changing the code. The user-facing view is in the [packa
    @tessera-internal/test-utils   fixtures, axe helper, instance mounting (tests only)
 ```
 
-Kits never import each other. When one kit improves another (the call shows a chat panel, the call button counts people through presence, comments render rich text through the editor) it asks the instance's service registry, and works without the answer. `@tessera/protocol` is only a dependency for the shapes of messages (chat, signalling, ICE).
+Kits never import each other. When one kit improves another (the call shows a chat panel, the call button counts people through presence, comments render rich text through the editor) it asks the instance's service registry, and works without the answer. `@tessera-kit/protocol` is only a dependency for the shapes of messages (chat, signalling, ICE).
 
 ## One kit, four layers
 
@@ -28,7 +28,7 @@ Each kit has the shape the `tessera` core expects of a plugin.
 
 ## Chat: one protocol, two servers
 
-The chat client only ever speaks the `chat.*` request protocol from `@tessera/protocol` (`chat.send`, `chat.history`, `chat.react`, …) plus the room broadcasts. tessera-server answers those requests. With the `local` transport there is no server, so the kit registers an in-tab emulation (`local-server.ts`) that answers the same requests from the storage adapter and broadcasts through the transport. The client code is therefore identical in both modes, and the same engine is used in the tests to stand in for the server.
+The chat client only ever speaks the `chat.*` request protocol from `@tessera-kit/protocol` (`chat.send`, `chat.history`, `chat.react`, …) plus the room broadcasts. tessera-server answers those requests. With the `local` transport there is no server, so the kit registers an in-tab emulation (`local-server.ts`) that answers the same requests from the storage adapter and broadcasts through the transport. The client code is therefore identical in both modes, and the same engine is used in the tests to stand in for the server.
 
 ```text
  composer ─▶ session.send ── optimistic message (status: sending)

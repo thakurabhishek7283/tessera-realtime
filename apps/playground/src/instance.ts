@@ -5,9 +5,9 @@ import {
   type TesseraInstance,
   type ThemeMode,
   type UserInfo,
-} from '@tessera/core';
-import { createStorage, createUploads } from '@tessera/storage';
-import { createTransport } from '@tessera/transport';
+} from '@tessera-kit/core';
+import { createStorage, createUploads } from '@tessera-kit/storage';
+import { createTransport } from '@tessera-kit/transport';
 import { SECTIONS } from './sections.js';
 import { USERS } from './users.js';
 

@@ -1,4 +1,4 @@
-import type { TesseraContext } from '@tessera/core';
+import type { TesseraContext } from '@tessera-kit/core';
 
 /** The part of the editor kit's service the chat uses. Kits do not import each other (D4). */
 export interface EditorBridge {

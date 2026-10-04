@@ -18,10 +18,10 @@ Chat, calls and comments are in almost every collaborative product, and each one
 
 | Package | What it gives you | More |
 | --- | --- | --- |
-| [`@tessera/presence`](packages/presence) | Who is here: `<tessera-presence>` avatar stack with status dots, `<tessera-cursors>` live pointers, idle and away detection | [README](packages/presence/README.md) |
-| [`@tessera/chat`](packages/chat) | `<tessera-chat>`, `<tessera-inbox>`, `<tessera-chat-launcher>`: rooms and direct messages, replies, reactions, edits, typing, read receipts, attachments, emoji, long conversations | [README](packages/chat/README.md) |
-| [`@tessera/video`](packages/video) | `<tessera-call>`, `<tessera-call-button>`: WebRTC mesh calls with device preview, grid and spotlight, screen sharing, device switching, active speaker, connection quality | [README](packages/video/README.md) |
-| [`@tessera/comments`](packages/comments) | `<tessera-comments>`, `<tessera-comment-count>`: threaded discussion on anything with an id, replies, reactions, star ratings with a summary, resolve | [README](packages/comments/README.md) |
+| [`@tessera-kit/presence`](packages/presence) | Who is here: `<tessera-presence>` avatar stack with status dots, `<tessera-cursors>` live pointers, idle and away detection | [README](packages/presence/README.md) |
+| [`@tessera-kit/chat`](packages/chat) | `<tessera-chat>`, `<tessera-inbox>`, `<tessera-chat-launcher>`: rooms and direct messages, replies, reactions, edits, typing, read receipts, attachments, emoji, long conversations | [README](packages/chat/README.md) |
+| [`@tessera-kit/video`](packages/video) | `<tessera-call>`, `<tessera-call-button>`: WebRTC mesh calls with device preview, grid and spotlight, screen sharing, device switching, active speaker, connection quality | [README](packages/video/README.md) |
+| [`@tessera-kit/comments`](packages/comments) | `<tessera-comments>`, `<tessera-comment-count>`: threaded discussion on anything with an id, replies, reactions, star ratings with a summary, resolve | [README](packages/comments/README.md) |
 
 Every package also has a headless API and a `/react` entry. The private packages `@tessera-internal/react-wrap` and `test-utils` are bundled into the kits.
 
@@ -41,8 +41,8 @@ The packages are not on npm yet, so build them from source first (see [Developme
 
 ```html
 <script type="module">
-  import '@tessera/chat/elements';
-  import '@tessera/comments/elements';
+  import '@tessera-kit/chat/elements';
+  import '@tessera-kit/comments/elements';
 </script>
 
 <tessera-chat conversation="support"></tessera-chat>
@@ -54,9 +54,9 @@ A bare element runs on Tessera's implicit default instance, which uses the `loca
 ### React
 
 ```tsx
-import { Chat } from '@tessera/chat/react';
-import { Comments } from '@tessera/comments/react';
-import { Call } from '@tessera/video/react';
+import { Chat } from '@tessera-kit/chat/react';
+import { Comments } from '@tessera-kit/comments/react';
+import { Call } from '@tessera-kit/video/react';
 
 export function Support({ listingId }: { listingId: string }) {
   return (
@@ -76,9 +76,9 @@ The wrappers do nothing on the server, so they are safe in Next.js; import them 
 Turn kits on and off in one place; each loads only when enabled.
 
 ```ts
-import { createTessera } from '@tessera/core';
-import { createStorage } from '@tessera/storage';
-import { createTransport } from '@tessera/transport';
+import { createTessera } from '@tessera-kit/core';
+import { createStorage } from '@tessera-kit/storage';
+import { createTransport } from '@tessera-kit/transport';
 
 const tessera = createTessera(
   {
@@ -95,10 +95,10 @@ const tessera = createTessera(
   },
   {
     plugins: {
-      presence: () => import('@tessera/presence'),
-      chat: () => import('@tessera/chat'),
-      video: () => import('@tessera/video'),
-      comments: () => import('@tessera/comments'),
+      presence: () => import('@tessera-kit/presence'),
+      chat: () => import('@tessera-kit/chat'),
+      video: () => import('@tessera-kit/video'),
+      comments: () => import('@tessera-kit/comments'),
     },
     adapters: { transport: createTransport, storage: createStorage },
   },

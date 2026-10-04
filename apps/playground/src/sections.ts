@@ -1,4 +1,4 @@
-import type { PluginLoader, TesseraInstance } from '@tessera/core';
+import type { PluginLoader, TesseraInstance } from '@tessera-kit/core';
 import type { TemplateResult } from 'lit';
 import type { z } from 'zod';
 import { chatSection } from './sections/chat.js';

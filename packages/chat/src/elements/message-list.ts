@@ -1,5 +1,5 @@
-import type { ReadonlyStore, UserInfo } from '@tessera/core';
-import { baseStyles, focusRing, TesseraElement, visuallyHidden } from '@tessera/elements';
+import type { ReadonlyStore, UserInfo } from '@tessera-kit/core';
+import { baseStyles, focusRing, TesseraElement, visuallyHidden } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 import { previewText } from '../messages.js';

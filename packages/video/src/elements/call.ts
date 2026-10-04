@@ -5,7 +5,7 @@ import {
   TesseraElement,
   toast,
   visuallyHidden,
-} from '@tessera/elements';
+} from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 import { computeGrid } from '../grid.js';

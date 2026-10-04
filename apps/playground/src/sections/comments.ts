@@ -1,5 +1,5 @@
-import { CommentsConfig } from '@tessera/comments';
-import '@tessera/comments/elements';
+import { CommentsConfig } from '@tessera-kit/comments';
+import '@tessera-kit/comments/elements';
 import { html } from 'lit';
 import type { Section } from '../sections.js';
 import { USERS } from '../users.js';
@@ -10,7 +10,7 @@ export const commentsSection: Section = {
   blurb:
     'A discussion attached to any thing in your app. Switch on ratings to use it for reviews, or resolve to use it for review workflows. Open another tab as a different user to see comments, replies and reactions arrive live.',
   schema: CommentsConfig,
-  load: () => import('@tessera/comments'),
+  load: () => import('@tessera-kit/comments'),
   defaults: { rich: false, ratings: true, resolve: true },
   render: ({ user }) => html`
     <article style="max-width:46rem;margin-bottom:var(--tessera-space-4)">

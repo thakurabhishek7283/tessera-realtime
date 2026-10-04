@@ -1,4 +1,4 @@
-import type { ReadonlyStore, UserInfo } from '@tessera/core';
+import type { ReadonlyStore, UserInfo } from '@tessera-kit/core';
 import type { PresenceConfigValue } from './config.js';
 
 export type PresenceStatus = 'active' | 'idle' | 'away';
@@ -57,7 +57,7 @@ export interface PresenceApi {
   join(scope?: string): Promise<PresenceHandle>;
 }
 
-declare module '@tessera/core' {
+declare module '@tessera-kit/core' {
   interface FeatureApiMap {
     presence: PresenceApi;
   }

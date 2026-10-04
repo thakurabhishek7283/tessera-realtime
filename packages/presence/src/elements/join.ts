@@ -1,4 +1,4 @@
-import type { TesseraContext } from '@tessera/core';
+import type { TesseraContext } from '@tessera-kit/core';
 import type { PresenceApi, PresenceHandle, PresenceUser } from '../types.js';
 
 /**

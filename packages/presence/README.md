@@ -1,4 +1,4 @@
-# @tessera/presence
+# @tessera-kit/presence
 
 Who is here, and how active are they: a headless presence API, an avatar stack, live pointers and React bindings. Part of [tessera-realtime](../../README.md).
 
@@ -10,7 +10,7 @@ It needs a transport (`local`, `websocket` or a custom one) and nothing else: wi
 
 ```html
 <script type="module">
-  import '@tessera/presence/elements';
+  import '@tessera-kit/presence/elements';
 </script>
 
 <header>
@@ -27,8 +27,8 @@ A bare tag works without any setup: it switches the feature on in an implicit in
 ### With `createTessera`
 
 ```ts
-import { createTessera } from '@tessera/core';
-import { createTransport } from '@tessera/transport';
+import { createTessera } from '@tessera-kit/core';
+import { createTransport } from '@tessera-kit/transport';
 
 const tessera = createTessera(
   {
@@ -36,7 +36,7 @@ const tessera = createTessera(
     transport: { type: 'local' }, // or { type: 'websocket', url: 'wss://…/v1/ws' }
     features: { presence: { enabled: true, idleAfterMs: 30_000 } },
   },
-  { plugins: { presence: () => import('@tessera/presence') }, adapters: { transport: createTransport } },
+  { plugins: { presence: () => import('@tessera-kit/presence') }, adapters: { transport: createTransport } },
 );
 await tessera.ready;
 
@@ -49,7 +49,7 @@ page?.set({ location: '/invoices/42' });
 ### React
 
 ```tsx
-import { Cursors, Presence, usePresence } from '@tessera/presence/react';
+import { Cursors, Presence, usePresence } from '@tessera-kit/presence/react';
 
 function Header() {
   const { peers } = usePresence('invoice-42');

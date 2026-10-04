@@ -1,4 +1,4 @@
-import type { ReadonlyStore, UserInfo } from '@tessera/core';
+import type { ReadonlyStore, UserInfo } from '@tessera-kit/core';
 import type { VideoConfigValue } from './config.js';
 import type { PeerLinkState } from './peer-link.js';
 import type { Quality } from './quality.js';
@@ -90,7 +90,7 @@ export interface VideoApi {
   call(callId: string): CallController;
 }
 
-declare module '@tessera/core' {
+declare module '@tessera-kit/core' {
   interface FeatureApiMap {
     video: VideoApi;
   }

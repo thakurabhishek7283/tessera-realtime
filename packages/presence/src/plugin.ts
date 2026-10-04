@@ -1,4 +1,4 @@
-import { definePlugin } from '@tessera/core';
+import { definePlugin } from '@tessera-kit/core';
 import { createPresenceApi } from './api.js';
 import { PresenceConfig } from './config.js';
 import { de } from './i18n/de.js';
@@ -11,7 +11,7 @@ const disposers = new WeakMap<PresenceApi, () => Promise<void>>();
  * The `presence` feature: who is here, how active they are and where their pointers are.
  *
  * @example
- * createTessera(cfg, { plugins: { presence: () => import('@tessera/presence') } });
+ * createTessera(cfg, { plugins: { presence: () => import('@tessera-kit/presence') } });
  */
 export const presencePlugin = definePlugin({
   id: 'presence',

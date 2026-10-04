@@ -11,14 +11,14 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@tessera/chat": "workspace:*",
-    "@tessera/comments": "workspace:*",
-    "@tessera/core": "^0.1.0",
-    "@tessera/elements": "^0.1.0",
-    "@tessera/presence": "workspace:*",
-    "@tessera/storage": "^0.1.0",
-    "@tessera/transport": "^0.1.0",
-    "@tessera/video": "workspace:*",
+    "@tessera-kit/chat": "workspace:*",
+    "@tessera-kit/comments": "workspace:*",
+    "@tessera-kit/core": "^0.1.0",
+    "@tessera-kit/elements": "^0.1.0",
+    "@tessera-kit/presence": "workspace:*",
+    "@tessera-kit/storage": "^0.1.0",
+    "@tessera-kit/transport": "^0.1.0",
+    "@tessera-kit/video": "workspace:*",
     "lit": "^3.3.0",
     "zod": "^4.1.0"
   },

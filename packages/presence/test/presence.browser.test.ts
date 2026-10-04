@@ -1,6 +1,6 @@
-import '@tessera/elements/define';
+import '@tessera-kit/elements/define';
 import '../src/elements/index.js';
-import { alice, bob, carol, FakeHub } from '@tessera/testing';
+import { alice, bob, carol, FakeHub } from '@tessera-kit/testing';
 import {
   cleanup,
   expectAccessible,

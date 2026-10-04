@@ -1,12 +1,12 @@
-import { createTessera, type StorageAdapter, type Transport, type UserInfo } from '@tessera/core';
-import { createMemoryStorage, createUploads } from '@tessera/storage';
+import { createTessera, type StorageAdapter, type Transport, type UserInfo } from '@tessera-kit/core';
+import { createMemoryStorage, createUploads } from '@tessera-kit/storage';
 import {
   alice,
   createFakeClock,
   createSequentialIds,
   type FakeClock,
   type FakeHub,
-} from '@tessera/testing';
+} from '@tessera-kit/testing';
 import type { CommentsApi } from '../src/index.js';
 
 export interface Tab {

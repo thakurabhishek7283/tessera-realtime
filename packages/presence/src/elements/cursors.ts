@@ -1,5 +1,5 @@
-import { colorForId } from '@tessera/core';
-import { baseStyles, readableTextOn, TesseraElement } from '@tessera/elements';
+import { colorForId } from '@tessera-kit/core';
+import { baseStyles, readableTextOn, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, type PropertyDeclarations } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 import { ScopeSession } from './join.js';

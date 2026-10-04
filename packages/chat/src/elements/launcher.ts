@@ -1,4 +1,4 @@
-import { baseStyles, focusRing, TesseraElement } from '@tessera/elements';
+import { baseStyles, focusRing, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import type { ChatApi } from '../types.js';
 

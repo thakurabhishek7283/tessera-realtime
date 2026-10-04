@@ -1,5 +1,5 @@
-import type { StorageAdapter } from '@tessera/core';
-import { alice, bob, carol, FakeHub } from '@tessera/testing';
+import type { StorageAdapter } from '@tessera-kit/core';
+import { alice, bob, carol, FakeHub } from '@tessera-kit/testing';
 import { describe, expect, it } from 'vitest';
 import { type Comment, summarise } from '../src/index.js';
 import { createWorld, until } from './env.js';

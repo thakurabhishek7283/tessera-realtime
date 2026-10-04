@@ -1,4 +1,4 @@
-import { alice, bob, carol, FakeHub } from '@tessera/testing';
+import { alice, bob, carol, FakeHub } from '@tessera-kit/testing';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { type Person, person, until } from './call-env.js';
 import { FakeRTCPeerConnection } from './fakes.js';

@@ -1,4 +1,4 @@
-import { baseStyles, focusRing, TesseraElement } from '@tessera/elements';
+import { baseStyles, focusRing, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 
 const STAR = 'M12 3.6l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9 6.8 19.7l1-5.8L3.5 9.8l5.9-.8z';

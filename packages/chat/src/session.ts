@@ -7,7 +7,7 @@ import {
   TesseraError,
   type Unsubscribe,
   type UserInfo,
-} from '@tessera/core';
+} from '@tessera-kit/core';
 import {
   ChatReactionEvent,
   ChatReadEvent,
@@ -16,7 +16,7 @@ import {
   type TopicRequest,
   type TopicResponse,
   TopicSchemas,
-} from '@tessera/protocol';
+} from '@tessera-kit/protocol';
 import type { ChatConfigValue } from './config.js';
 import { isStored, upsert, withReaction } from './messages.js';
 import type {

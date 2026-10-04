@@ -4,7 +4,7 @@ import {
   focusRing,
   TesseraElement,
   visuallyHidden,
-} from '@tessera/elements';
+} from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import { previewText } from '../messages.js';
 import type { Message, MessageBody } from '../types.js';

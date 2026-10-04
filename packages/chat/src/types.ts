@@ -1,5 +1,5 @@
-import type { ReadonlyStore, UserInfo } from '@tessera/core';
-import type { AttachmentDto, ConversationDto, MessageBodyDto, MessageDto } from '@tessera/protocol';
+import type { ReadonlyStore, UserInfo } from '@tessera-kit/core';
+import type { AttachmentDto, ConversationDto, MessageBodyDto, MessageDto } from '@tessera-kit/protocol';
 import type { ChatConfigValue } from './config.js';
 
 export type MessageBody = MessageBodyDto;
@@ -73,7 +73,7 @@ export interface ChatApi {
   openDirect(userId: string): Promise<ConversationController>;
 }
 
-declare module '@tessera/core' {
+declare module '@tessera-kit/core' {
   interface FeatureApiMap {
     chat: ChatApi;
   }

@@ -1,4 +1,4 @@
-import type { TesseraContext } from '@tessera/core';
+import type { TesseraContext } from '@tessera-kit/core';
 
 /** The `editor` kit's service and both of its elements are available: rich comments can be used. */
 export function richAvailable(ctx: TesseraContext): boolean {

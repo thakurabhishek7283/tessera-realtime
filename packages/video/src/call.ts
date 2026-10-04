@@ -5,8 +5,8 @@ import {
   type Room,
   type TesseraContext,
   TesseraError,
-} from '@tessera/core';
-import { IceRes, RtcSignal } from '@tessera/protocol';
+} from '@tessera-kit/core';
+import { IceRes, RtcSignal } from '@tessera-kit/protocol';
 import { DEFAULT_ICE_SERVERS, type VideoConfigValue } from './config.js';
 import { createLevelMeter, type LevelMeter } from './levels.js';
 import { acquireMedia, browserMediaDevices, listDevices, type MediaDevicesLike } from './media.js';

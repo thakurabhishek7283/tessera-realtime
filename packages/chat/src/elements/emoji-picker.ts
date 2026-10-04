@@ -1,4 +1,4 @@
-import { baseStyles, focusRing, TesseraElement } from '@tessera/elements';
+import { baseStyles, focusRing, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, type PropertyDeclarations } from 'lit';
 import { EMOJI_GROUPS } from '../emoji.js';
 

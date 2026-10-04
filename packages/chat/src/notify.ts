@@ -1,4 +1,4 @@
-import type { ReadonlyStore, TesseraContext, Unsubscribe } from '@tessera/core';
+import type { ReadonlyStore, TesseraContext, Unsubscribe } from '@tessera-kit/core';
 import type { ChatConfigValue } from './config.js';
 
 /** Shows the unread count in the page title and plays a short sound for new messages. */

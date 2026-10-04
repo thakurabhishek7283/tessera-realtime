@@ -5,13 +5,13 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@tessera/core': link:./external/tessera/packages/core
-  '@tessera/elements': link:./external/tessera/packages/elements
-  '@tessera/react': link:./external/tessera/packages/react
-  '@tessera/testing': link:./external/tessera/packages/testing
-  '@tessera/transport': link:./external/tessera/packages/transport
-  '@tessera/storage': link:./external/tessera/packages/storage
-  '@tessera/protocol': link:./external/tessera/packages/protocol
+  '@tessera-kit/core': link:./external/tessera/packages/core
+  '@tessera-kit/elements': link:./external/tessera/packages/elements
+  '@tessera-kit/react': link:./external/tessera/packages/react
+  '@tessera-kit/testing': link:./external/tessera/packages/testing
+  '@tessera-kit/transport': link:./external/tessera/packages/transport
+  '@tessera-kit/storage': link:./external/tessera/packages/storage
+  '@tessera-kit/protocol': link:./external/tessera/packages/protocol
 
 importers:
 
@@ -50,28 +50,28 @@ importers:
 
   apps/playground:
     dependencies:
-      '@tessera/chat':
+      '@tessera-kit/chat':
         specifier: workspace:*
         version: link:../../packages/chat
-      '@tessera/comments':
+      '@tessera-kit/comments':
         specifier: workspace:*
         version: link:../../packages/comments
-      '@tessera/core':
+      '@tessera-kit/core':
         specifier: link:../../external/tessera/packages/core
         version: link:../../external/tessera/packages/core
-      '@tessera/elements':
+      '@tessera-kit/elements':
         specifier: link:../../external/tessera/packages/elements
         version: link:../../external/tessera/packages/elements
-      '@tessera/presence':
+      '@tessera-kit/presence':
         specifier: workspace:*
         version: link:../../packages/presence
-      '@tessera/storage':
+      '@tessera-kit/storage':
         specifier: link:../../external/tessera/packages/storage
         version: link:../../external/tessera/packages/storage
-      '@tessera/transport':
+      '@tessera-kit/transport':
         specifier: link:../../external/tessera/packages/transport
         version: link:../../external/tessera/packages/transport
-      '@tessera/video':
+      '@tessera-kit/video':
         specifier: workspace:*
         version: link:../../packages/video
       lit:
@@ -93,19 +93,19 @@ importers:
       '@lit/context':
         specifier: ^1.1.0
         version: 1.1.6
-      '@tessera/core':
+      '@tessera-kit/core':
         specifier: link:../../external/tessera/packages/core
         version: link:../../external/tessera/packages/core
-      '@tessera/elements':
+      '@tessera-kit/elements':
         specifier: link:../../external/tessera/packages/elements
         version: link:../../external/tessera/packages/elements
-      '@tessera/protocol':
+      '@tessera-kit/protocol':
         specifier: link:../../external/tessera/packages/protocol
         version: link:../../external/tessera/packages/protocol
-      '@tessera/react':
+      '@tessera-kit/react':
         specifier: link:../../external/tessera/packages/react
         version: link:../../external/tessera/packages/react
-      '@tessera/storage':
+      '@tessera-kit/storage':
         specifier: link:../../external/tessera/packages/storage
         version: link:../../external/tessera/packages/storage
       lit:
@@ -121,10 +121,10 @@ importers:
       '@tessera-internal/test-utils':
         specifier: workspace:*
         version: link:../test-utils
-      '@tessera/testing':
+      '@tessera-kit/testing':
         specifier: link:../../external/tessera/packages/testing
         version: link:../../external/tessera/packages/testing
-      '@tessera/transport':
+      '@tessera-kit/transport':
         specifier: link:../../external/tessera/packages/transport
         version: link:../../external/tessera/packages/transport
       '@types/node':
@@ -154,19 +154,19 @@ importers:
       '@lit/context':
         specifier: ^1.1.0
         version: 1.1.6
-      '@tessera/core':
+      '@tessera-kit/core':
         specifier: link:../../external/tessera/packages/core
         version: link:../../external/tessera/packages/core
-      '@tessera/elements':
+      '@tessera-kit/elements':
         specifier: link:../../external/tessera/packages/elements
         version: link:../../external/tessera/packages/elements
-      '@tessera/protocol':
+      '@tessera-kit/protocol':
         specifier: link:../../external/tessera/packages/protocol
         version: link:../../external/tessera/packages/protocol
-      '@tessera/react':
+      '@tessera-kit/react':
         specifier: link:../../external/tessera/packages/react
         version: link:../../external/tessera/packages/react
-      '@tessera/storage':
+      '@tessera-kit/storage':
         specifier: link:../../external/tessera/packages/storage
         version: link:../../external/tessera/packages/storage
       lit:
@@ -182,10 +182,10 @@ importers:
       '@tessera-internal/test-utils':
         specifier: workspace:*
         version: link:../test-utils
-      '@tessera/testing':
+      '@tessera-kit/testing':
         specifier: link:../../external/tessera/packages/testing
         version: link:../../external/tessera/packages/testing
-      '@tessera/transport':
+      '@tessera-kit/transport':
         specifier: link:../../external/tessera/packages/transport
         version: link:../../external/tessera/packages/transport
       '@types/node':
@@ -215,13 +215,13 @@ importers:
       '@lit/context':
         specifier: ^1.1.0
         version: 1.1.6
-      '@tessera/core':
+      '@tessera-kit/core':
         specifier: link:../../external/tessera/packages/core
         version: link:../../external/tessera/packages/core
-      '@tessera/elements':
+      '@tessera-kit/elements':
         specifier: link:../../external/tessera/packages/elements
         version: link:../../external/tessera/packages/elements
-      '@tessera/react':
+      '@tessera-kit/react':
         specifier: link:../../external/tessera/packages/react
         version: link:../../external/tessera/packages/react
       lit:
@@ -237,13 +237,13 @@ importers:
       '@tessera-internal/test-utils':
         specifier: workspace:*
         version: link:../test-utils
-      '@tessera/storage':
+      '@tessera-kit/storage':
         specifier: link:../../external/tessera/packages/storage
         version: link:../../external/tessera/packages/storage
-      '@tessera/testing':
+      '@tessera-kit/testing':
         specifier: link:../../external/tessera/packages/testing
         version: link:../../external/tessera/packages/testing
-      '@tessera/transport':
+      '@tessera-kit/transport':
         specifier: link:../../external/tessera/packages/transport
         version: link:../../external/tessera/packages/transport
       '@types/node':
@@ -282,16 +282,16 @@ importers:
 
   packages/test-utils:
     dependencies:
-      '@tessera/core':
+      '@tessera-kit/core':
         specifier: link:../../external/tessera/packages/core
         version: link:../../external/tessera/packages/core
-      '@tessera/elements':
+      '@tessera-kit/elements':
         specifier: link:../../external/tessera/packages/elements
         version: link:../../external/tessera/packages/elements
-      '@tessera/storage':
+      '@tessera-kit/storage':
         specifier: link:../../external/tessera/packages/storage
         version: link:../../external/tessera/packages/storage
-      '@tessera/testing':
+      '@tessera-kit/testing':
         specifier: link:../../external/tessera/packages/testing
         version: link:../../external/tessera/packages/testing
       axe-core:
@@ -309,16 +309,16 @@ importers:
       '@lit/context':
         specifier: ^1.1.0
         version: 1.1.6
-      '@tessera/core':
+      '@tessera-kit/core':
         specifier: link:../../external/tessera/packages/core
         version: link:../../external/tessera/packages/core
-      '@tessera/elements':
+      '@tessera-kit/elements':
         specifier: link:../../external/tessera/packages/elements
         version: link:../../external/tessera/packages/elements
-      '@tessera/protocol':
+      '@tessera-kit/protocol':
         specifier: link:../../external/tessera/packages/protocol
         version: link:../../external/tessera/packages/protocol
-      '@tessera/react':
+      '@tessera-kit/react':
         specifier: link:../../external/tessera/packages/react
         version: link:../../external/tessera/packages/react
       lit:
@@ -334,19 +334,19 @@ importers:
       '@tessera-internal/test-utils':
         specifier: workspace:*
         version: link:../test-utils
-      '@tessera/chat':
+      '@tessera-kit/chat':
         specifier: workspace:*
         version: link:../chat
-      '@tessera/presence':
+      '@tessera-kit/presence':
         specifier: workspace:*
         version: link:../presence
-      '@tessera/storage':
+      '@tessera-kit/storage':
         specifier: link:../../external/tessera/packages/storage
         version: link:../../external/tessera/packages/storage
-      '@tessera/testing':
+      '@tessera-kit/testing':
         specifier: link:../../external/tessera/packages/testing
         version: link:../../external/tessera/packages/testing
-      '@tessera/transport':
+      '@tessera-kit/transport':
         specifier: link:../../external/tessera/packages/transport
         version: link:../../external/tessera/packages/transport
       '@types/node':

@@ -1,4 +1,4 @@
-import { TesseraError } from '@tessera/core';
+import { TesseraError } from '@tessera-kit/core';
 import { MAX_COMMENTS } from './config.js';
 import type { Comment, ThreadDoc } from './schemas.js';
 

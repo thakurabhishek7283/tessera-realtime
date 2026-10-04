@@ -1,4 +1,4 @@
-# @tessera/chat
+# @tessera-kit/chat
 
 Chat for any web app: rooms and direct messages with replies, reactions, edits, typing indicators, read receipts and attachments, as a headless API, web components and React bindings. Part of [tessera-realtime](../../README.md).
 
@@ -13,7 +13,7 @@ It runs in two modes with the same code:
 
 ```html
 <script type="module">
-  import '@tessera/chat/elements';
+  import '@tessera-kit/chat/elements';
 </script>
 
 <tessera-chat conversation="general" style="--tessera-chat-height: 28rem"></tessera-chat>
@@ -24,9 +24,9 @@ A bare tag works without any setup: it switches the feature on in an implicit in
 ### With `createTessera`
 
 ```ts
-import { createTessera } from '@tessera/core';
-import { createStorage } from '@tessera/storage';
-import { createTransport } from '@tessera/transport';
+import { createTessera } from '@tessera-kit/core';
+import { createStorage } from '@tessera-kit/storage';
+import { createTransport } from '@tessera-kit/transport';
 
 const tessera = createTessera(
   {
@@ -36,7 +36,7 @@ const tessera = createTessera(
     features: { chat: { enabled: true, conversations: [{ id: 'general', title: 'General' }] } },
   },
   {
-    plugins: { chat: () => import('@tessera/chat') },
+    plugins: { chat: () => import('@tessera-kit/chat') },
     adapters: { transport: createTransport, storage: createStorage },
   },
 );
@@ -51,7 +51,7 @@ room?.state.subscribe(({ messages }) => console.log(messages.length));
 ### React
 
 ```tsx
-import { Chat, useConversation, useTotalUnread } from '@tessera/chat/react';
+import { Chat, useConversation, useTotalUnread } from '@tessera-kit/chat/react';
 
 function Support() {
   const unread = useTotalUnread();
@@ -68,7 +68,7 @@ function Support() {
 
 ### With other Tessera kits
 
-Kits never import each other; they meet through the service registry. Enable the `presence` kit and `<tessera-chat>` shows who is in the conversation; enable the `editor` kit (and import `@tessera/editor/elements`) and set `composer.rich` to compose and show rich text.
+Kits never import each other; they meet through the service registry. Enable the `presence` kit and `<tessera-chat>` shows who is in the conversation; enable the `editor` kit (and import `@tessera-kit/editor/elements`) and set `composer.rich` to compose and show rich text.
 
 ## Configuration
 

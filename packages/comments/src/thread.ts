@@ -7,8 +7,8 @@ import {
   TesseraError,
   type Unsubscribe,
   type UserInfo,
-} from '@tessera/core';
-import type { Collection } from '@tessera/storage';
+} from '@tessera-kit/core';
+import type { Collection } from '@tessera-kit/storage';
 import type { CommentsConfigValue } from './config.js';
 import {
   addComment,

@@ -1,4 +1,4 @@
-import type { Logger } from '@tessera/core';
+import type { Logger } from '@tessera-kit/core';
 
 export type PeerLinkState = 'new' | 'connecting' | 'connected' | 'reconnecting' | 'closed';
 

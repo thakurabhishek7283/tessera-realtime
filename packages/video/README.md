@@ -1,4 +1,4 @@
-# @tessera/video
+# @tessera-kit/video
 
 Video calls for any web app: WebRTC calls for up to six people with a device preview, mute, device switching, screen sharing, active speaker, connection quality and automatic recovery, as a headless API, web components and React bindings. Part of [tessera-realtime](../../README.md).
 
@@ -10,7 +10,7 @@ Calls are peer-to-peer (a mesh): everybody connects to everybody, and the transp
 
 ```html
 <script type="module">
-  import '@tessera/video/elements';
+  import '@tessera-kit/video/elements';
 </script>
 
 <tessera-call call-id="standup" style="--tessera-call-height: 32rem"></tessera-call>
@@ -24,8 +24,8 @@ Everybody who uses the same `call-id` is in the same call. A bare tag works with
 ### With `createTessera`
 
 ```ts
-import { createTessera } from '@tessera/core';
-import { createTransport } from '@tessera/transport';
+import { createTessera } from '@tessera-kit/core';
+import { createTransport } from '@tessera-kit/transport';
 
 const tessera = createTessera(
   {
@@ -35,7 +35,7 @@ const tessera = createTessera(
       video: { enabled: true, iceServersUrl: 'https://api.example.com/v1/ice', maxParticipants: 4 },
     },
   },
-  { plugins: { video: () => import('@tessera/video') }, adapters: { transport: createTransport } },
+  { plugins: { video: () => import('@tessera-kit/video') }, adapters: { transport: createTransport } },
 );
 await tessera.ready;
 
@@ -48,7 +48,7 @@ call?.state.subscribe((s) => console.log(s.phase, s.participants.length));
 ### React
 
 ```tsx
-import { Call, useCall } from '@tessera/video/react';
+import { Call, useCall } from '@tessera-kit/video/react';
 
 function Room() {
   const { controller, state } = useCall('standup');

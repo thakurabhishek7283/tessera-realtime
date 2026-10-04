@@ -1,4 +1,4 @@
-import type { ReadonlyStore } from '@tessera/core';
+import type { ReadonlyStore } from '@tessera-kit/core';
 import type { CommentsConfigValue } from './config.js';
 import type { RatingSummary } from './ops.js';
 import type { Comment } from './schemas.js';
@@ -46,7 +46,7 @@ export interface CommentsApi {
   count(targetId: string): ReadonlyStore<number>;
 }
 
-declare module '@tessera/core' {
+declare module '@tessera-kit/core' {
   interface FeatureApiMap {
     comments: CommentsApi;
   }

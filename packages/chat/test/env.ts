@@ -1,5 +1,5 @@
-import { createTessera, type StorageAdapter, type Transport, type UserInfo } from '@tessera/core';
-import { createMemoryStorage, createUploads } from '@tessera/storage';
+import { createTessera, type StorageAdapter, type Transport, type UserInfo } from '@tessera-kit/core';
+import { createMemoryStorage, createUploads } from '@tessera-kit/storage';
 import {
   alice,
   createFakeClock,
@@ -8,8 +8,8 @@ import {
   type FakeClock,
   type FakeHub,
   type TestInstance,
-} from '@tessera/testing';
-import { createLocalTransport } from '@tessera/transport';
+} from '@tessera-kit/testing';
+import { createLocalTransport } from '@tessera-kit/transport';
 import type { ChatApi, ChatConfigValue } from '../src/index.js';
 import { createLocalChatServer } from '../src/index.js';
 

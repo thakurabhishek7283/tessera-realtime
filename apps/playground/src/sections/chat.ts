@@ -1,5 +1,5 @@
-import { ChatConfig } from '@tessera/chat';
-import '@tessera/chat/elements';
+import { ChatConfig } from '@tessera-kit/chat';
+import '@tessera-kit/chat/elements';
 import { html } from 'lit';
 import type { Section } from '../sections.js';
 import { USERS } from '../users.js';
@@ -10,7 +10,7 @@ export const chatSection: Section = {
   blurb:
     'Rooms and direct messages with reactions, replies, edits, typing and read receipts. Open another tab as a different user (local transport) or point the playground at tessera-server. Message "bob" or "carol" from the box under the list to start a direct conversation.',
   schema: ChatConfig,
-  load: () => import('@tessera/chat'),
+  load: () => import('@tessera-kit/chat'),
   defaults: {
     conversations: [
       { id: 'general', title: 'General' },

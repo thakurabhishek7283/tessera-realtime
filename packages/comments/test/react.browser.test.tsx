@@ -1,5 +1,5 @@
-import '@tessera/elements/define';
-import { TesseraProvider } from '@tessera/react';
+import '@tessera-kit/elements/define';
+import { TesseraProvider } from '@tessera-kit/react';
 import { cleanup, until } from '@tessera-internal/test-utils';
 import { createRoot } from 'react-dom/client';
 import { afterEach, describe, expect, it, vi } from 'vitest';

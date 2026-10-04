@@ -12,10 +12,10 @@ Budgets (min + gzip, peers excluded) are set on that total, from what the code c
 
 | Package | Entry and plugin | Elements, everything they can load |
 | --- | --- | --- |
-| `@tessera/presence` | 6 kB | 8 kB |
-| `@tessera/chat` | 11 kB | 27 kB |
-| `@tessera/video` | 10 kB | 18 kB (the plan's budget) |
-| `@tessera/comments` | 6 kB | 13 kB |
+| `@tessera-kit/presence` | 6 kB | 8 kB |
+| `@tessera-kit/chat` | 11 kB | 27 kB |
+| `@tessera-kit/video` | 10 kB | 18 kB (the plan's budget) |
+| `@tessera-kit/comments` | 6 kB | 13 kB |
 
 The first load of `<tessera-chat>` is smaller than the total: the message list, message, composer and chat element are about 15 kB gzipped, and the plugin, the inbox, the launcher and the emoji picker each arrive in their own chunk when they are needed.
 

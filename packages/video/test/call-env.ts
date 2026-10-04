@@ -1,5 +1,5 @@
-import type { UserInfo } from '@tessera/core';
-import { alice, createTestInstance, type FakeHub } from '@tessera/testing';
+import type { UserInfo } from '@tessera-kit/core';
+import { alice, createTestInstance, type FakeHub } from '@tessera-kit/testing';
 import { createVideoApi } from '../src/api.js';
 import type { CallEnv } from '../src/call.js';
 import { VideoConfig } from '../src/config.js';

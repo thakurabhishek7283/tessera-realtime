@@ -1,4 +1,4 @@
-import { MessageBody } from '@tessera/protocol';
+import { MessageBody } from '@tessera-kit/protocol';
 import { z } from 'zod';
 import { MAX_COMMENTS } from './config.js';
 

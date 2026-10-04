@@ -5,7 +5,7 @@ import {
   type Room,
   type TesseraContext,
   type UserInfo,
-} from '@tessera/core';
+} from '@tessera-kit/core';
 import { type ActivityOptions, type ActivityTracker, trackActivity } from './activity.js';
 import type { PresenceConfigValue } from './config.js';
 import type {

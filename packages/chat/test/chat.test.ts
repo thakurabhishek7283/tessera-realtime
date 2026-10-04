@@ -1,4 +1,4 @@
-import { alice, bob, carol, FakeHub } from '@tessera/testing';
+import { alice, bob, carol, FakeHub } from '@tessera-kit/testing';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { ConversationController, Message } from '../src/index.js';
 import { createWorld, until, type World } from './env.js';
