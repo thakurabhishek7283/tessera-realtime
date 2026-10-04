@@ -22,6 +22,7 @@ Component and end-to-end tests need Chromium. Install it with `npx playwright in
 | Unit tests | `pnpm test` (add `--filter @tessera-kit/chat` to narrow) |
 | Component tests in a browser | `pnpm test:browser` |
 | End-to-end tests | `pnpm e2e` (set `TESSERA_SERVER_URL` to also run the tests against a running tessera-server) |
+| Page budgets (what a page pays, all dependencies included) | `pnpm budget` (after `pnpm build`) |
 | Format | `pnpm format` |
 
 ## Conventions

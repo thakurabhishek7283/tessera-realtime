@@ -148,6 +148,7 @@ pnpm deps          # clones + builds tessera v0.1.0 into external/ (or links ../
 pnpm install
 pnpm dev           # the playground at http://localhost:5173
 pnpm check         # lint, typecheck, unit tests, build
+pnpm budget        # page budgets, every dependency included (after a build)
 pnpm test:browser  # component tests in Chromium (real WebRTC with fake devices for video)
 pnpm e2e           # two-tab end-to-end tests against the built playground
 ```
