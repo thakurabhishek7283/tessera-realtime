@@ -1,6 +1,6 @@
 import type { PluginLoader, TesseraInstance } from '@tessera-kit/core';
 import type { TemplateResult } from 'lit';
-import type { z } from 'zod';
+import type { z } from 'zod/mini';
 import { chatSection } from './sections/chat.js';
 import { commentsSection } from './sections/comments.js';
 import { presenceSection } from './sections/presence.js';
@@ -12,7 +12,7 @@ export interface Section {
   label: string;
   /** What the section demonstrates, shown above it. */
   blurb: string;
-  schema: z.ZodType;
+  schema: z.core.$ZodType;
   load: PluginLoader;
   /** Defaults on top of `{ enabled: true }`, e.g. a predefined conversation list. */
   defaults?: Record<string, unknown>;
