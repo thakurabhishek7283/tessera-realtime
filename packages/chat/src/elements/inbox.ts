@@ -2,6 +2,7 @@ import { baseStyles, focusRing, TesseraElement, toast } from '@tessera-kit/eleme
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import { previewText } from '../messages.js';
 import type { ChatApi, Conversation } from '../types.js';
+import { version } from '../version.js';
 import { conversationTitle } from './titles.js';
 
 /**
@@ -12,6 +13,8 @@ import { conversationTitle } from './titles.js';
  * @csspart list @csspart item @csspart detail
  */
 export class TesseraInboxElement extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     conversation: { attribute: 'conversation' },
     view: { state: true },

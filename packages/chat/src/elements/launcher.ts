@@ -1,6 +1,7 @@
 import { baseStyles, focusRing, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import type { ChatApi } from '../types.js';
+import { version } from '../version.js';
 
 /**
  * `<tessera-chat-launcher>`: a floating button with an unread badge that opens the inbox in a
@@ -10,6 +11,8 @@ import type { ChatApi } from '../types.js';
  * @csspart button @csspart panel
  */
 export class TesseraChatLauncher extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     position: { reflect: true },
     open: { type: Boolean, reflect: true },
@@ -96,10 +99,21 @@ export class TesseraChatLauncher extends TesseraElement {
     super.updated(changed);
     if (changed.has('open') && this.open) {
       // Move focus into the panel so keyboard users do not have to tab through the page again.
-      void this.updateComplete.then(() => {
+      void this.updateComplete.then(async () => {
         const inbox = this.renderRoot.querySelector('tessera-inbox');
-        const first = inbox?.shadowRoot?.querySelector<HTMLElement>('.item, input');
-        first?.focus();
+        if (!inbox) return;
+        // The first time the panel opens, the inbox may still be downloading, and it renders its
+        // list once it has found its instance, so give it a few frames.
+        await customElements.whenDefined('tessera-inbox');
+        for (let frame = 0; frame < 10 && this.open; frame++) {
+          await inbox.updateComplete;
+          const first = inbox.shadowRoot?.querySelector<HTMLElement>('.item, input');
+          if (first) {
+            first.focus();
+            return;
+          }
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+        }
       });
     }
   }

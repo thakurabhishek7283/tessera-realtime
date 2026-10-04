@@ -89,6 +89,13 @@
     ]
   },
   {
+    "name": "@tessera-kit/chat — autoload (tag registrations only; each tag's chunk loads on first use)",
+    "path": "packages/chat/dist/autoload.js",
+    "limit": "0.3 kB",
+    "gzip": true,
+    "ignore": ["@tessera-kit/elements", "./elements/tags"]
+  },
+  {
     "name": "@tessera-kit/video — entry + plugin",
     "path": ["packages/video/dist/index.js", "packages/video/dist/plugin-*.js"],
     "limit": "10 kB",

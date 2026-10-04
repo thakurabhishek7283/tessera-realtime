@@ -5,6 +5,7 @@ import { QUICK_REACTIONS } from '../emoji.js';
 import { previewText } from '../messages.js';
 import type { Attachment, Message } from '../types.js';
 import { linkify, timeLabel } from '../ui-util.js';
+import { version } from '../version.js';
 import { richAvailable, watchEditor } from './editor-bridge.js';
 
 export type MessageAction = 'react' | 'reply' | 'edit' | 'delete' | 'copy' | 'retry' | 'jump';
@@ -42,6 +43,8 @@ const formatSize = (bytes: number): string =>
  * @csspart attachments @csspart actions
  */
 export class TesseraChatMessage extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     message: { attribute: false },
     selfId: { attribute: false },
