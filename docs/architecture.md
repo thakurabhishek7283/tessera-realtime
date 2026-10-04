@@ -21,7 +21,7 @@ Kits never import each other. When one kit improves another (the call shows a ch
 
 Each kit has the shape the `tessera` core expects of a plugin.
 
-1. **Schemas and config** (`config.ts`, `schemas.ts`): zod definitions of the stored documents and of the feature options. The config schema is the single source for the README tables (`scripts/gen-config-docs.mjs`) and for the playground's config form.
+1. **Schemas and config** (`config.ts`, `schemas.ts`): zod/mini definitions of the stored documents and of the feature options. The config schema is the single source for the README tables (`scripts/gen-config-docs.mjs`) and for the playground's config form.
 2. **Headless logic** (`session.ts`, `call.ts`, `thread.ts`, `handle.ts`): state in a store, commands that talk to the transport or storage, and bus events. Nothing here touches the DOM, so the node tests cover nearly all behaviour; WebRTC and media are replaced by simulations that follow the real state machines.
 3. **Plugin and API** (`plugin.ts`, `api.ts`): `definePlugin` registers the feature, validates the options, merges the `en` and `de` messages and exposes the API (`openConversation`, `call`, `thread`, `join`).
 4. **Elements and React** (`elements/`, `react/`): the public elements extend `TesseraElement`, find the instance and the controller, and render with Lit. React wrappers use `wrapElement` and hooks read the stores with `useSyncExternalStore`.
