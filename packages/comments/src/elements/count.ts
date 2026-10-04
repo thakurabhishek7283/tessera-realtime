@@ -1,6 +1,7 @@
 import { baseStyles, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import type { CommentsApi } from '../types.js';
+import { version } from '../version.js';
 
 /**
  * `<tessera-comment-count target="card-7">`: a small badge with the number of comments, for lists.
@@ -9,6 +10,8 @@ import type { CommentsApi } from '../types.js';
  * @csspart badge
  */
 export class TesseraCommentCount extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     target: { attribute: 'target' },
     showZero: { type: Boolean, attribute: 'show-zero' },

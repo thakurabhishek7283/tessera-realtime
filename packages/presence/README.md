@@ -64,6 +64,22 @@ function Header() {
 
 On the server the wrappers render an empty tag that upgrades after hydration. In Next.js, import them with `dynamic(() => import(...), { ssr: false })` if you want to avoid the empty tag in the HTML.
 
+## Entry points
+
+| Import | What it does |
+| --- | --- |
+| `@tessera-kit/presence/elements` | Defines every presence element. |
+| `@tessera-kit/presence/elements/<tag>` | Defines one element and the ones it renders, for importing exactly what a page uses: `tessera-cursors`, `tessera-presence`. |
+| `@tessera-kit/presence/autoload` | Only registers the tags (109 B gzip). Each element downloads the first time it appears on the page, which suits plain HTML pages. |
+| `@tessera-kit/presence` | The headless API and the plugin, without elements. |
+| `@tessera-kit/presence/react` | React components. |
+
+```html
+<script type="module">
+  import '@tessera-kit/presence/autoload';
+</script>
+```
+
 ## Configuration
 
 <!-- config:start -->

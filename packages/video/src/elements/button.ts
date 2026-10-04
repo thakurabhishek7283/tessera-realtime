@@ -1,5 +1,6 @@
 import { baseStyles, focusRing, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
+import { version } from '../version.js';
 
 /** The part of the presence kit the button uses to count people in a call. */
 interface PresenceLike {
@@ -19,6 +20,8 @@ interface PresenceLike {
  * @slot - the button's label
  */
 export class TesseraCallButton extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     callId: { attribute: 'call-id' },
     open: { type: Boolean, reflect: true },

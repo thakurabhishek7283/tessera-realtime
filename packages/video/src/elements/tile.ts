@@ -1,6 +1,7 @@
 import { baseStyles, focusRing, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import type { PeerLinkState, Quality } from '../types.js';
+import { version } from '../version.js';
 
 /**
  * One person's video: the stream (or an avatar when the camera is off), their name, what is
@@ -10,6 +11,8 @@ import type { PeerLinkState, Quality } from '../types.js';
  * @csspart tile @csspart video @csspart label @csspart quality
  */
 export class TesseraVideoTile extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     peerId: { attribute: 'peer-id' },
     name: {},

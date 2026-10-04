@@ -10,6 +10,7 @@ import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } fr
 import { repeat } from 'lit/directives/repeat.js';
 import { computeGrid } from '../grid.js';
 import type { CallController, CallState, DeviceKind, Participant, VideoApi } from '../types.js';
+import { version } from '../version.js';
 
 // Icons the shared set does not have.
 registerIcons({
@@ -39,6 +40,8 @@ const chatId = (callId: string): string => `call:${callId.replace(/[^A-Za-z0-9_.
  * @csspart stage @csspart controls @csspart prejoin
  */
 export class TesseraCallElement extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     callId: { attribute: 'call-id' },
     autostart: { type: Boolean },

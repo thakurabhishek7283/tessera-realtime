@@ -1,21 +1,18 @@
-import { defineElement, registerImplicitPlugin } from '@tessera-kit/elements';
-import { TesseraCommentsElement } from './comments.js';
-import { TesseraCommentComposer } from './composer.js';
-import { TesseraCommentCount } from './count.js';
-import { TesseraStarRating } from './stars.js';
+// Each tag is defined by its own module (`./tags/<tag>.js`, published as `elements/<tag>`), which
+// also defines the elements it renders. Importing this entry defines the kit's elements.
+import './tags/tessera-star-rating.js';
+import './tags/tessera-comment-composer.js';
+import './tags/tessera-comments.js';
+import './tags/tessera-comment-count.js';
+import type { TesseraCommentsElement } from './comments.js';
+import type { TesseraCommentComposer } from './composer.js';
+import type { TesseraCommentCount } from './count.js';
+import type { TesseraStarRating } from './stars.js';
 
 export { TesseraCommentsElement } from './comments.js';
 export { type ComposerSubmit, TesseraCommentComposer } from './composer.js';
 export { TesseraCommentCount } from './count.js';
 export { TesseraStarRating } from './stars.js';
-
-// Defining the tags and registering the loader is what lets a bare <tessera-comments> work on the
-// implicit default instance, without any createTessera() call.
-defineElement('tessera-star-rating', TesseraStarRating);
-defineElement('tessera-comment-composer', TesseraCommentComposer);
-defineElement('tessera-comments', TesseraCommentsElement);
-defineElement('tessera-comment-count', TesseraCommentCount);
-registerImplicitPlugin('comments', () => import('../plugin.js'));
 
 declare global {
   interface HTMLElementTagNameMap {

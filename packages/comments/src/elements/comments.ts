@@ -8,6 +8,7 @@ import {
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import type { Comment, CommentNode, CommentsApi, ThreadController } from '../types.js';
 import { linkify, plainText } from '../ui-util.js';
+import { version } from '../version.js';
 import type { ComposerSubmit } from './composer.js';
 import { richAvailable, watchEditor } from './editor-bridge.js';
 
@@ -24,6 +25,8 @@ import { richAvailable, watchEditor } from './editor-bridge.js';
  * @slot empty - shown when there are no comments
  */
 export class TesseraCommentsElement extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     target: { attribute: 'target' },
     readonly: { type: Boolean, reflect: true },

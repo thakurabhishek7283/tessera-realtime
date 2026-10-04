@@ -2,6 +2,7 @@ import { baseStyles, focusRing, TesseraElement, visuallyHidden } from '@tessera-
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 import type { PresenceUser } from '../types.js';
+import { version } from '../version.js';
 import { ScopeSession } from './join.js';
 
 /**
@@ -13,6 +14,8 @@ import { ScopeSession } from './join.js';
  * @slot empty - shown when nobody else is here
  */
 export class TesseraPresenceElement extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     scope: { attribute: 'scope' },
     max: { type: Number },
