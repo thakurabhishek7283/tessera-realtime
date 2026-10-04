@@ -1,6 +1,5 @@
 import '@tessera-kit/elements/define';
 import '../src/elements/index.js';
-import { alice, bob, carol, FakeHub } from '@tessera-kit/testing';
 import {
   cleanup,
   expectAccessible,
@@ -9,6 +8,7 @@ import {
   settle,
   until,
 } from '@tessera-internal/test-utils';
+import { alice, bob, carol, FakeHub } from '@tessera-kit/testing';
 import { afterEach, describe, expect, it } from 'vitest';
 import type { TesseraCursorsElement, TesseraPresenceElement } from '../src/elements/index.js';
 import type { PresenceApi } from '../src/index.js';

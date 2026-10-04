@@ -1,4 +1,10 @@
-import { baseStyles, focusRing, TesseraElement, toast, visuallyHidden } from '@tessera-kit/elements';
+import {
+  baseStyles,
+  focusRing,
+  TesseraElement,
+  toast,
+  visuallyHidden,
+} from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import type { Comment, CommentNode, CommentsApi, ThreadController } from '../types.js';
 import { linkify, plainText } from '../ui-util.js';

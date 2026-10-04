@@ -1,7 +1,7 @@
 import '@tessera-kit/elements/define';
+import { cleanup, until } from '@tessera-internal/test-utils';
 import { TesseraProvider } from '@tessera-kit/react';
 import { bob } from '@tessera-kit/testing';
-import { cleanup, until } from '@tessera-internal/test-utils';
 import { createRoot } from 'react-dom/client';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';

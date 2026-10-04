@@ -1,5 +1,10 @@
 import type { ReadonlyStore, UserInfo } from '@tessera-kit/core';
-import type { AttachmentDto, ConversationDto, MessageBodyDto, MessageDto } from '@tessera-kit/protocol';
+import type {
+  AttachmentDto,
+  ConversationDto,
+  MessageBodyDto,
+  MessageDto,
+} from '@tessera-kit/protocol';
 import type { ChatConfigValue } from './config.js';
 
 export type MessageBody = MessageBodyDto;

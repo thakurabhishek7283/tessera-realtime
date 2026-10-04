@@ -1,6 +1,6 @@
+import { cleanup, expectAccessible, must } from '@tessera-internal/test-utils';
 import { createStore } from '@tessera-kit/core';
 import { bob, carol } from '@tessera-kit/testing';
-import { cleanup, expectAccessible, must } from '@tessera-internal/test-utils';
 import { afterEach, describe, expect, it } from 'vitest';
 import { userEvent } from 'vitest/browser';
 import type { TesseraMessageList } from '../src/elements/index.js';

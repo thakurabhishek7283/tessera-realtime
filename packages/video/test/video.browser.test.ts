@@ -1,5 +1,5 @@
-import { alice, bob, carol, FakeHub } from '@tessera-kit/testing';
 import { cleanup, expectAccessible, must } from '@tessera-internal/test-utils';
+import { alice, bob, carol, FakeHub } from '@tessera-kit/testing';
 import { afterEach, describe, expect, it } from 'vitest';
 import type { TesseraVideoTile } from '../src/elements/index.js';
 import { buttonIn, mountTab, shadow, tilesOf, until, videoOf } from './ui.js';

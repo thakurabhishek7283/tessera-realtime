@@ -1,4 +1,9 @@
-import { createTessera, type StorageAdapter, type Transport, type UserInfo } from '@tessera-kit/core';
+import {
+  createTessera,
+  type StorageAdapter,
+  type Transport,
+  type UserInfo,
+} from '@tessera-kit/core';
 import { createMemoryStorage, createUploads } from '@tessera-kit/storage';
 import {
   alice,

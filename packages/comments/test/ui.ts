@@ -1,8 +1,8 @@
 import '@tessera-kit/elements/define';
 import '../src/elements/index.js';
+import { must, settle } from '@tessera-internal/test-utils';
 import type { UserInfo } from '@tessera-kit/core';
 import { alice } from '@tessera-kit/testing';
-import { must, settle } from '@tessera-internal/test-utils';
 import { createWorld, type Tab, type World } from './env.js';
 
 export { until } from '@tessera-internal/test-utils';

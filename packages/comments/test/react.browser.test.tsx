@@ -1,6 +1,6 @@
 import '@tessera-kit/elements/define';
-import { TesseraProvider } from '@tessera-kit/react';
 import { cleanup, until } from '@tessera-internal/test-utils';
+import { TesseraProvider } from '@tessera-kit/react';
 import { createRoot } from 'react-dom/client';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';

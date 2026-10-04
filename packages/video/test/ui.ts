@@ -2,9 +2,9 @@ import '@tessera-kit/elements/define';
 import '../src/elements/index.js';
 import '@tessera-kit/presence/elements';
 import '@tessera-kit/chat/elements';
+import { must, settle } from '@tessera-internal/test-utils';
 import type { UserInfo } from '@tessera-kit/core';
 import { alice, createTestInstance, type FakeHub } from '@tessera-kit/testing';
-import { must, settle } from '@tessera-internal/test-utils';
 
 export { until } from '@tessera-internal/test-utils';
 
