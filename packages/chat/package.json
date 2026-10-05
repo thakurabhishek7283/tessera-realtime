@@ -1,6 +1,6 @@
 {
   "name": "@tessera-kit/chat",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Chat kit for Tessera: rooms and direct messages with reactions, replies, typing and read receipts, as a headless API and web components. Works across tabs with no backend, or against tessera-server",
   "license": "MIT",
   "author": "Abhishek Thakur",

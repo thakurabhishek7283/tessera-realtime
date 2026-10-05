@@ -1,6 +1,6 @@
 {
   "name": "@tessera-kit/presence",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Presence kit for Tessera: who is here, idle detection, an avatar stack and live cursors",
   "license": "MIT",
   "author": "Abhishek Thakur",
