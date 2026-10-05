@@ -1,6 +1,6 @@
 {
   "name": "@tessera-kit/comments",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Comments kit for Tessera: threaded discussions with replies, reactions, star ratings and resolve, attached to any entity in your app. Headless API, web components and React bindings",
   "license": "MIT",
   "author": "Abhishek Thakur",
