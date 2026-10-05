@@ -1,6 +1,7 @@
 import { baseStyles, focusRing, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, type PropertyDeclarations } from 'lit';
 import { EMOJI_GROUPS } from '../emoji.js';
+import { version } from '../version.js';
 
 const COLUMNS = 8;
 
@@ -11,6 +12,8 @@ const COLUMNS = 8;
  * @csspart grid @csspart tab
  */
 export class TesseraEmojiPicker extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     group: { state: true },
     cursor: { state: true },

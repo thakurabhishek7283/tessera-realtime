@@ -65,6 +65,22 @@ function Room() {
 
 Kits never import each other; they meet through the service registry. Enable the `chat` kit and `<tessera-call>` offers a chat panel next to the video (conversation `call:<id>`). Enable the `presence` kit and `<tessera-call-button>` shows how many people are in the call.
 
+## Entry points
+
+| Import | What it does |
+| --- | --- |
+| `@tessera-kit/video/elements` | Defines every video element. |
+| `@tessera-kit/video/elements/<tag>` | Defines one element and the ones it renders, for importing exactly what a page uses: `tessera-call`, `tessera-call-button`, `tessera-video-tile`. |
+| `@tessera-kit/video/autoload` | Only registers the tags (120 B gzip). Each element downloads the first time it appears on the page, which suits plain HTML pages. |
+| `@tessera-kit/video` | The headless API and the plugin, without elements. |
+| `@tessera-kit/video/react` | React components. |
+
+```html
+<script type="module">
+  import '@tessera-kit/video/autoload';
+</script>
+```
+
 ## Configuration
 
 <!-- config:start -->

@@ -70,6 +70,22 @@ function Support() {
 
 Kits never import each other; they meet through the service registry. Enable the `presence` kit and `<tessera-chat>` shows who is in the conversation; enable the `editor` kit (and import `@tessera-kit/editor/elements`) and set `composer.rich` to compose and show rich text.
 
+## Entry points
+
+| Import | What it does |
+| --- | --- |
+| `@tessera-kit/chat/elements` | Defines `<tessera-chat>` and the elements it renders. `<tessera-inbox>` and `<tessera-chat-launcher>` download the first time one of them appears on the page, and the launcher loads the inbox when its panel first opens. |
+| `@tessera-kit/chat/elements/<tag>` | Defines one element and the ones it renders, for importing exactly what a page uses: `tessera-chat`, `tessera-chat-composer`, `tessera-chat-launcher`, `tessera-chat-message`, `tessera-emoji-picker`, `tessera-inbox`, `tessera-message-list`. |
+| `@tessera-kit/chat/autoload` | Only registers the tags (162 B gzip). Each element downloads the first time it appears on the page, which suits plain HTML pages. |
+| `@tessera-kit/chat` | The headless API and the plugin, without elements. |
+| `@tessera-kit/chat/react` | React components. |
+
+```html
+<script type="module">
+  import '@tessera-kit/chat/autoload';
+</script>
+```
+
 ## Configuration
 
 <!-- config:start -->

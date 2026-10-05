@@ -1,6 +1,6 @@
 [
   {
-    "name": "@tessera-kit/presence \u2014 entry + plugin",
+    "name": "@tessera-kit/presence — entry + plugin",
     "path": ["packages/presence/dist/index.js", "packages/presence/dist/plugin-*.js"],
     "limit": "6 kB",
     "gzip": true,
@@ -18,7 +18,7 @@
     ]
   },
   {
-    "name": "@tessera-kit/presence \u2014 elements",
+    "name": "@tessera-kit/presence — elements",
     "path": "packages/presence/dist/elements/index.js",
     "limit": "8 kB",
     "gzip": true,
@@ -36,7 +36,14 @@
     ]
   },
   {
-    "name": "@tessera-kit/chat \u2014 entry + plugin",
+    "name": "@tessera-kit/presence — autoload (tag registrations only; each tag's chunk loads on first use)",
+    "path": "packages/presence/dist/autoload.js",
+    "limit": "0.3 kB",
+    "gzip": true,
+    "ignore": ["@tessera-kit/elements", "./elements/tags"]
+  },
+  {
+    "name": "@tessera-kit/chat — entry + plugin",
     "path": [
       "packages/chat/dist/index.js",
       "packages/chat/dist/plugin-*.js",
@@ -59,7 +66,7 @@
     ]
   },
   {
-    "name": "@tessera-kit/chat \u2014 elements (everything they can load, lazy chunks included)",
+    "name": "@tessera-kit/chat — elements (everything they can load, lazy chunks included)",
     "path": [
       "packages/chat/dist/elements/index.js",
       "packages/chat/dist/emoji-*.js",
@@ -82,7 +89,14 @@
     ]
   },
   {
-    "name": "@tessera-kit/video \u2014 entry + plugin",
+    "name": "@tessera-kit/chat — autoload (tag registrations only; each tag's chunk loads on first use)",
+    "path": "packages/chat/dist/autoload.js",
+    "limit": "0.3 kB",
+    "gzip": true,
+    "ignore": ["@tessera-kit/elements", "./elements/tags"]
+  },
+  {
+    "name": "@tessera-kit/video — entry + plugin",
     "path": ["packages/video/dist/index.js", "packages/video/dist/plugin-*.js"],
     "limit": "10 kB",
     "gzip": true,
@@ -101,7 +115,7 @@
     ]
   },
   {
-    "name": "@tessera-kit/video \u2014 elements (everything they can load)",
+    "name": "@tessera-kit/video — elements (everything they can load)",
     "path": "packages/video/dist/elements/index.js",
     "limit": "18 kB",
     "gzip": true,
@@ -120,7 +134,14 @@
     ]
   },
   {
-    "name": "@tessera-kit/comments \u2014 entry + plugin",
+    "name": "@tessera-kit/video — autoload (tag registrations only; each tag's chunk loads on first use)",
+    "path": "packages/video/dist/autoload.js",
+    "limit": "0.3 kB",
+    "gzip": true,
+    "ignore": ["@tessera-kit/elements", "./elements/tags"]
+  },
+  {
+    "name": "@tessera-kit/comments — entry + plugin",
     "path": ["packages/comments/dist/index.js", "packages/comments/dist/plugin-*.js"],
     "limit": "6 kB",
     "gzip": true,
@@ -139,7 +160,7 @@
     ]
   },
   {
-    "name": "@tessera-kit/comments \u2014 elements (everything they can load)",
+    "name": "@tessera-kit/comments — elements (everything they can load)",
     "path": "packages/comments/dist/elements/index.js",
     "limit": "13 kB",
     "gzip": true,
@@ -156,5 +177,12 @@
       "react",
       "react/jsx-runtime"
     ]
+  },
+  {
+    "name": "@tessera-kit/comments — autoload (tag registrations only; each tag's chunk loads on first use)",
+    "path": "packages/comments/dist/autoload.js",
+    "limit": "0.3 kB",
+    "gzip": true,
+    "ignore": ["@tessera-kit/elements", "./elements/tags"]
   }
 ]

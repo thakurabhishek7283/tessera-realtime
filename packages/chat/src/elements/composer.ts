@@ -1,13 +1,8 @@
-import {
-  baseStyles,
-  defineElement,
-  focusRing,
-  TesseraElement,
-  visuallyHidden,
-} from '@tessera-kit/elements';
+import { baseStyles, focusRing, TesseraElement, visuallyHidden } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import { previewText } from '../messages.js';
 import type { Message, MessageBody } from '../types.js';
+import { version } from '../version.js';
 import { richAvailable, watchEditor } from './editor-bridge.js';
 
 export interface ComposerSubmit {
@@ -47,6 +42,8 @@ const EMPTY_DOC = { type: 'doc', content: [{ type: 'paragraph' }] };
  * @csspart box @csspart textarea @csspart send @csspart banner
  */
 export class TesseraChatComposer extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     options: { attribute: false },
     replyTo: { attribute: false },
@@ -336,8 +333,7 @@ export class TesseraChatComposer extends TesseraElement {
   /** The picker (and its emoji list) is only downloaded when someone opens it. */
   async #togglePicker(): Promise<void> {
     if (!this.pickerOpen) {
-      const { TesseraEmojiPicker } = await import('./emoji-picker.js');
-      defineElement('tessera-emoji-picker', TesseraEmojiPicker);
+      await import('./tags/tessera-emoji-picker.js');
     }
     this.pickerOpen = !this.pickerOpen;
   }

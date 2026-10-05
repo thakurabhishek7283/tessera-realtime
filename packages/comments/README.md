@@ -66,6 +66,22 @@ function Listing({ id }: { id: string }) {
 
 Kits never import each other; they meet through the service registry. Enable the `editor` kit (and import `@tessera-kit/editor/elements`) and comments are written and shown as rich text (`rich`, on by default; plain text otherwise); add `mentions` to offer `@` mentions of the people in the thread.
 
+## Entry points
+
+| Import | What it does |
+| --- | --- |
+| `@tessera-kit/comments/elements` | Defines every comments element. |
+| `@tessera-kit/comments/elements/<tag>` | Defines one element and the ones it renders, for importing exactly what a page uses: `tessera-comment-composer`, `tessera-comment-count`, `tessera-comments`, `tessera-star-rating`. |
+| `@tessera-kit/comments/autoload` | Only registers the tags (132 B gzip). Each element downloads the first time it appears on the page, which suits plain HTML pages. |
+| `@tessera-kit/comments` | The headless API and the plugin, without elements. |
+| `@tessera-kit/comments/react` | React components. |
+
+```html
+<script type="module">
+  import '@tessera-kit/comments/autoload';
+</script>
+```
+
 ## Configuration
 
 <!-- config:start -->

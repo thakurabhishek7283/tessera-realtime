@@ -2,6 +2,7 @@ import { colorForId } from '@tessera-kit/core';
 import { baseStyles, readableTextOn, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, type PropertyDeclarations } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
+import { version } from '../version.js';
 import { ScopeSession } from './join.js';
 
 /** Pointer updates are sent at most this often. */
@@ -18,6 +19,8 @@ const FADE_AFTER_MS = 3000;
  * @csspart cursor @csspart label
  */
 export class TesseraCursorsElement extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     scope: { attribute: 'scope' },
     target: { attribute: 'target' },

@@ -2,6 +2,7 @@ import { baseStyles, focusRing, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import type { CommentBody } from '../types.js';
 import { plainText } from '../ui-util.js';
+import { version } from '../version.js';
 import { richAvailable, watchEditor } from './editor-bridge.js';
 
 export interface ComposerSubmit {
@@ -28,6 +29,8 @@ const EMPTY_DOC = { type: 'doc', content: [{ type: 'paragraph' }] };
  * @csspart box @csspart submit
  */
 export class TesseraCommentComposer extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     rich: { type: Boolean },
     ratings: { type: Boolean },

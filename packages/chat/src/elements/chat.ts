@@ -2,6 +2,7 @@ import { baseStyles, focusRing, TesseraElement, toast } from '@tessera-kit/eleme
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import { previewText } from '../messages.js';
 import type { ChatApi, Conversation, ConversationController, Message } from '../types.js';
+import { version } from '../version.js';
 import type { ComposerSubmit, TesseraChatComposer } from './composer.js';
 import { hasKit } from './editor-bridge.js';
 import type { MessageActionDetail } from './message.js';
@@ -21,6 +22,8 @@ import { conversationTitle } from './titles.js';
  * @slot empty - shown when there are no messages
  */
 export class TesseraChatElement extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     conversation: { attribute: 'conversation' },
     heading: { attribute: 'heading' },

@@ -5,6 +5,7 @@ import { repeat } from 'lit/directives/repeat.js';
 import { previewText } from '../messages.js';
 import type { ConversationState, Message } from '../types.js';
 import { buildRows, computeWindow, dayLabel, offsetOf, type Row } from '../ui-util.js';
+import { version } from '../version.js';
 import type { MessageActionDetail, MessageFeatures } from './message.js';
 
 /** Above this many rows only the ones near the viewport are rendered. */
@@ -27,6 +28,8 @@ const ANNOUNCE_EVERY_MS = 2000;
  * @slot empty - shown when there are no messages
  */
 export class TesseraMessageList extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     stateStore: { attribute: false },
     selfId: { attribute: false },
